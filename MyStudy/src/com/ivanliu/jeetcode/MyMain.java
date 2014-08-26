@@ -107,6 +107,11 @@ public class MyMain {
 		int[] cost = new int[] {3,4};
 		System.out.println(sol.canCompleteCircuit(gas, cost));
 		
+		// Palindrome Partitioning
+		String input2 = "aaaab";
+		List<List<String>> resList = sol.partition(input2);
+		Solution.printListII(resList);
+		
 	}
 	
 	public static Set<String> buildSet(String[] array) {

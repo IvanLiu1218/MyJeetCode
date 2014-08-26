@@ -638,5 +638,117 @@ public class Solution {
 		return -1;
 		
     }
+	
+	/*
+	 * Palindrome Partitioning
+	 * 
+	 * Given a string s, partition s such that every substring of the partition is a palindrome.
+	 * Return all possible palindrome partitioning of s.
+	 * 
+	 * For example, given s = "aab",
+	 * Return
+	 * [
+	 *   ["aa","b"],
+	 *   ["a","a","b"]
+	 * ]
+	 */
+	
+	private List<List<String>> resList = null;
+	
+	public List<List<String>> partition(String s) {
+        
+		if (s == null) return null;
+		
+		resList = new ArrayList<List<String>>();
+		
+		int strlen = s.length();
+		/*
+		List<String> list = new ArrayList<String>();
+		for (int i = 0; i < strlen; ++i) {
+			
+			list.add(String.format("%s", s.charAt(i)));
+		}
+		resList.add(new ArrayList<String>(list));
+		list.clear();*/
+		
+		for (int i = 0; i < strlen; ++i) {
+			
+			List<String> list = new ArrayList<String>();
+			recurPartition(s, i, list);
+		}
+		
+		return resList;
+    }
+	
+	private void recurPartition(String s, int i, List<String> list) {
+		
 
+		if (s.length() == 0) {
+			
+			resList.add(new ArrayList<String>(list));
+			return;
+		}
+		if (s.length() == 1) {
+			
+			list.add(s);
+			resList.add(new ArrayList<String>(list));
+			list.remove(list.size() - 1);
+			return;
+		}
+		
+		int j1 = i;
+		int j2 = i;
+		while (j1 >= 0 && j2 < s.length()) {
+			
+			if (s.charAt(j1) == s.charAt(j2) && j1 == 0) {
+				
+				list.add(s.substring(j1, j2 + 1));
+				String prefix = s.substring(j2 + 1);
+				for (int k = 0; k < prefix.length(); ++k) {
+					
+					recurPartition(s.substring(j2 + 1), k, list);
+				}
+				list.remove(list.size() - 1);
+			}
+			j1--;
+			j2++;
+		}
+		
+		j1 = i;
+		j2 = i + 1;
+		while (j1 >= 0 && j2 < s.length()) {
+			
+			if (s.charAt(j1) == s.charAt(j2) && j1 == 0) {
+				
+				list.add(s.substring(j1, j2 + 1));
+				recurPartition(s.substring(j2 + 1), 0, list);
+				list.remove(list.size() - 1);
+			}
+			j1--;
+			j2++;
+		}
+	}
+	
+	public static void printList(List<String> list) {
+		
+		System.out.print("[");
+		int i = 0;
+		for (; i < list.size() - 1; ++i) {
+			
+			System.out.print(list.get(i) + ",");
+		}
+		System.out.println(list.get(i) + "]");
+	}
+	
+	public static void printListII(List<List<String>> llist) {
+		
+		System.out.println("[");
+		int i = 0;
+		for (; i < llist.size(); ++i ) {
+			
+			List<String> list = llist.get(i);
+			printList(list);
+		}
+		System.out.println("]");
+	}
 }
