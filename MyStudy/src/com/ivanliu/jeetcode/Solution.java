@@ -3,11 +3,13 @@ package com.ivanliu.jeetcode;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class Solution {
 
 	/*
-	 * #0001 Reverse Words in a String
+	 * Reverse Words in a String
+	 * 
 	 * Given an input string, reverse the string word by word.
 	 * For example,
 	 * Given s = "the sky is blue",
@@ -82,7 +84,7 @@ public class Solution {
 	}
 	
 	/*
-	 * #0002 Evaluate Reverse Polish Notation
+	 * Evaluate Reverse Polish Notation
 	 * 
 	 * Evaluate the value of an arithmetic expression in Reverse Polish Notation.
 	 * Valid operators are +, -, *, /. Each operand may be an integer or another expression.
@@ -132,7 +134,7 @@ public class Solution {
     }
 	
 	/*
-	 * #0003 Binary Tree Postorder Traversal 
+	 * Binary Tree Postorder Traversal 
 	 * 
 	 * ACCEPTED
 	 * 
@@ -169,7 +171,7 @@ public class Solution {
 	}
 	
 	/*
-	 * #0004 Binary Tree Preorder Traversal
+	 * Binary Tree Preorder Traversal
 	 * 
 	 * ACCEPTED
 	 * 
@@ -198,11 +200,8 @@ public class Solution {
 		}
 	}
 	
-	/*
-	 * #0005 
-	 * 
-	 */
 	static class ListNode {
+		
 		 int val;
 		 ListNode next;
 		 ListNode(int x) {
@@ -211,20 +210,433 @@ public class Solution {
 		}
 	}
 	
-	public void reorderList(ListNode head) {
+	public static void printListNode(ListNode head) {
+		
+		ListNode p = head;
+		while (p != null) {
+			
+			System.out.print(p.val + " ");
+			p = p.next;
+		}
+		System.out.println();
+	}
+	/*
+	 * Sort List 
+	 * 
+	 * Sort a linked list in O(n log n) time using constant space complexity.
+	 * 
+	 * ACCEPTED
+	 * 
+	 */
+	public ListNode sortList(ListNode head) {
         
+		if (head == null) return null;
+		if (head.next == null) return head;
+		ListNode mid = getMiddleNode(head);
+		
+		ListNode nhead1 = head;
+		ListNode nhead2 = mid.next;
+		mid.next = null;
+		
+		ListNode h = null;
+		if (nhead1 != null && nhead2 != null) {
+			
+			ListNode h1 = sortList(nhead1);
+			//printListNode(h1);
+			ListNode h2 = sortList(nhead2);
+			//printListNode(h2);
+			h = mergeListNode(h1, h2);
+			//printListNode(h);
+		}
+		
+		return h;
+    }
+	
+	private ListNode getMiddleNode(ListNode head) {
+		
+		if (head == null) return null;
+		if (head.next == null) return head;
+		
+		ListNode p1 = head;
+		ListNode p2 = p1.next;
+		
+		while (p2 != null && p2.next != null) {
+			
+			p1 = p1.next;
+			p2 = p2.next.next;
+		}
+		
+		return p1;
+	}
+	
+	private ListNode mergeListNode(ListNode a, ListNode b) {
+		
+		ListNode h = new ListNode(0);
+		ListNode p1 = a;
+		ListNode p2 = b;
+		
+		ListNode head = h;
+		
+		while (p1!= null && p2 != null) {
+			
+			if (p1.val < p2.val) {
+				
+				h.next = p1;
+				p1 = p1.next;
+			}
+			else {
+				
+				h.next = p2;
+				p2 = p2.next;
+			}
+			h = h.next;
+		}
+		if (p1 != null) {
+			
+			h.next = p1;
+		}
+		if (p2 != null) {
+			
+			h.next = p2;
+		}
+		
+		return head.next;
+	}
+	
+	/*
+	 * Insertion Sort List 
+	 * 
+	 * Sort a linked list using insertion sort.
+	 * 
+	 * ACCEPTED
+	 */
+	public ListNode insertionSortList(ListNode head) {
+        
+		if (head == null) return null;
+		if (head.next == null) return head;
+		
+		ListNode nhead = new ListNode(Integer.MIN_VALUE);
+		nhead.next = head;
+		
+		ListNode p = head.next;
+		
+		while (p != null) {
+			
+			p = insertNode(p, nhead);
+		}
+		
+		return nhead.next;
+    }
+	
+	private ListNode insertNode(ListNode node, ListNode from) {
+		
+		ListNode prev = getPrevNode(from, node);
+		ListNode next = node.next;
+		ListNode p1 = from; //start
+		ListNode p2 = node; //end
+		
+		while (p1 != null && p1 != p2) {
+			
+			if (p1.val <= node.val && node.val < p1.next.val) {
+				
+				node.next = p1.next;
+				p1.next = node;
+				prev.next = next;
+				return next;
+			}
+			p1 = p1.next;
+		}
+		
+		return next;
+	}
+	
+	private ListNode getPrevNode(ListNode head, ListNode node) {
+		
+		ListNode p1 = head;
+		ListNode p2 = head.next;
+		while (p2 != node) {
+			
+			p1 = p2;
+			p2 = p2.next;
+		}
+		
+		return p1;
+	}
+	
+	/*
+	 * Linked List Cycle
+	 * 
+	 * Given a linked list, determine if it has a cycle in it.
+	 * Follow up:
+	 * Can you solve it without using extra space?
+	 * 
+	 * ACCEPTED
+	 */
+	public boolean hasCycle(ListNode head) {
+        
+		if (head == null) return false;
+		if (head.next == null) return false;
+		
+		ListNode p1 = head.next;
+		ListNode p2 = p1.next.next;
+		
+		while (p2 != null ) {
+			
+			if (p1 == p2)
+				return true;
+			
+			p1 = p1.next;
+			p2 = p2.next;
+			if (p2 == null) break;
+			p2 = p2.next;
+		}
+		
+		return false;
 		
     }
 	
-	private ListNode reverseList(ListNode node) {
+	/*
+	 * Linked List Cycle II
+	 * 
+	 * Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
+	 * Follow up:
+	 * Can you solve it without using extra space?
+	 * 
+	 * ACCEPTED
+	 * 
+	 */
+	public ListNode detectCycle(ListNode head) {
+        
+		if (head == null) return null;
+		if (head.next == null) return null;
 		
-		if (node.next == null) return node;
+		ListNode p1 = head.next;
+		ListNode p2 = head.next.next;
 		
-		ListNode next = node.next;
-		ListNode newhead = reverseList(next);
-		next.next = node;
+		while (p2 != null ) {
+			
+			if (p1 == p2) {
+				
+				return getJoint(head, p1);
+			}
+			
+			p1 = p1.next;
+			p2 = p2.next;
+			if (p2 == null) break;
+			p2 = p2.next;
+		}
 		
-		return newhead;
+		return null;
+    }
+	
+	private ListNode getJoint(ListNode head, ListNode met) {
 		
+		ListNode p1 = head;
+		ListNode p2 = met;
+		
+		while (p1 != p2) {
+			
+			p1 = p1.next;
+			p2 = p2.next;
+		}
+		
+		return p1;
 	}
+	
+	/*
+	 * Word Break 
+	 * Given a string s and a dictionary of words dict, 
+	 * determine if s can be segmented into a space-separated 
+	 * sequence of one or more dictionary words.
+	 * 
+	 * For example, given
+	 * s = "leetcode",
+	 * dict = ["leet", "code"].
+	 * Return true because "leetcode" can be segmented as "leet code".
+	 * 
+	 * Last executed input:	
+	 * "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab", 
+	 * ["a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"]
+	 */
+	public boolean isBreak = false;
+	
+	public boolean wordBreak1(String s, Set<String> dict) {
+        
+		isBreak = false;
+		
+		String[] dicts = dict.toArray(new String[]{});
+		for (int i = 0; i < dicts.length; ++i) {
+			
+			String prefix = dicts[i];
+			if (s.startsWith(prefix)) {
+				
+				wordBreak1(s.substring(prefix.length()), dicts);
+			}
+		}
+		
+		return isBreak;
+    }
+	
+	private void wordBreak1(String s, String[] dicts) {
+		
+		if (isBreak) return;
+		
+		if (s.length() == 0) {
+			
+			isBreak = true;
+			return;
+		}
+		
+		for (int i = 0; i < dicts.length; ++i) {
+			
+			String prefix = dicts[i];
+			if (s.startsWith(prefix)) {
+				
+				wordBreak1(s.substring(prefix.length()), dicts);
+			}
+		}
+	}
+	
+	/*
+	 * Word Break II
+	 * 
+	 * Given a string s and a dictionary of words dict, add spaces in s to construct a sentence where each word is a valid dictionary word.
+	 * Return all such possible sentences.
+	 * For example, given
+	 * s = "catsanddog",
+	 * dict = ["cat", "cats", "and", "sand", "dog"].
+	 * A solution is ["cats and dog", "cat sand dog"].
+	 * 
+	 * Last executed input:	
+	 * "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab", 
+	 * ["a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"]
+	 * 
+	 */
+	private ArrayList<String> resArray = new ArrayList<String>();
+	
+	public List<String> wordBreak(String s, Set<String> dict) {
+        
+		String[] dicts = dict.toArray(new String[]{});
+		
+		for (int i = 0; i < dicts.length; ++i) {
+			
+			String res = "";
+			String prefix = dicts[i];
+			if (s.startsWith(prefix)) {
+				
+				res += prefix + ' ';
+				wordBreak(s.substring(prefix.length()), dicts, res);
+			}
+		}
+		return resArray;
+    }
+	
+	private void wordBreak(String s, String[] dicts, String result) {
+		
+		if (s.length() == 0) {
+			
+			resArray.add(result.trim());
+			return;
+		}
+		
+		for (int i = 0; i < dicts.length; ++i) {
+			
+			String prefix = dicts[i];
+			if (s.startsWith(prefix)) {
+				
+				result += prefix + ' ';
+				wordBreak(s.substring(prefix.length()), dicts, result);
+			}
+		}
+	}
+	
+	/*
+	 * Reorder List
+	 * 
+	 * Given a singly linked list L: L0¡úL1¡ú¡­¡úLn-1¡úLn,
+	 * reorder it to: L0¡úLn¡úL1¡úLn-1¡úL2¡úLn-2¡ú¡­
+	 * You must do this in-place without altering the nodes' values.
+	 * For example,
+	 * Given {1,2,3,4}, reorder it to {1,4,2,3}.
+	 * 
+	 * ACCEPTED
+	 */
+	public void reorderList(ListNode head) {
+        
+		ArrayList<ListNode> list = new ArrayList<ListNode>();
+		ListNode p = head;
+		while (p != null) {
+			
+			list.add(p);
+			p = p.next;
+		}
+		
+		ListNode nhead = new ListNode(0);
+		ListNode tp = nhead;
+		int len = list.size();
+		int mid = len / 2;
+		int i = 0;
+		while (i < mid){
+			
+			tp.next = list.get(i);
+			tp = tp.next;
+			tp.next = list.get(len - 1 - i);
+			tp = tp.next;
+			i++;
+		}
+		
+		if (len % 2 == 1) {
+			
+			tp.next = list.get(i);
+			tp = tp.next;
+		}
+		tp.next = null;
+		
+		head = nhead.next;
+    }
+	
+	/*
+	 * Gas Station
+	 * 
+	 * There are N gas stations along a circular route, where the amount of gas at station i is gas[i].
+	 * You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from station i to its next station (i+1). 
+	 * You begin the journey with an empty tank at one of the gas stations.
+	 * Return the starting gas station's index if you can travel around the circuit once, otherwise return -1.
+	 * 
+	 * Note:
+	 * The solution is guaranteed to be unique.
+	 * 
+	 * ACCEPTED
+	 */
+	
+	public int canCompleteCircuit(int[] gas, int[] cost) {
+        
+		int size = gas.length;
+		if (size == 1) return gas[0] >= cost[0] ? 0 : -1;
+		
+		for (int i = 0; i < size; ++i) {
+			
+			int hasGas = gas[i] - cost[i];
+			int j = i + 1;
+			//if (j >= size) j = j % size;
+			
+			while (hasGas >= 0 && j != i) {
+				
+				if (j >= size) {
+					
+					j = j % size;
+				}
+				hasGas += gas[j] - cost[j];
+				if (hasGas < 0) break;
+				j++;
+			}
+			
+			if (j == i) return i;
+		}
+		
+		
+		return -1;
+		
+    }
+
 }

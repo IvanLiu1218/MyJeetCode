@@ -1,6 +1,8 @@
 package com.ivanliu.jeetcode;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Random;

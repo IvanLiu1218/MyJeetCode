@@ -1,16 +1,22 @@
 package com.ivanliu.jeetcode;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 
+
+import java.util.Set;
+
+import com.ivanliu.jeetcode.Solution.ListNode;
 import com.ivanliu.jeetcode.Solution.TreeNode;
 
 public class MyMain {
 
 	public static void main(String[] args) {
 		
-		//runJettCode();
-		runInterview();
+		runJettCode();
+		//runInterview();
 
 	}
 	
@@ -47,7 +53,84 @@ public class MyMain {
 			System.out.print(output0004.get(i) + " ");
 		}
 		System.out.println("");
-
+		
+		//ListNode list1 = buildListNode(new int[]{3,4,7,10,21});
+		//printListNode(list1);
+		//ListNode list2 = buildListNode(new int[]{0,1,4,7});
+		//printListNode(list2);
+		//ListNode head = sol.mergeListNode(list1, list2);
+		ListNode list = buildListNode(new int[] {10,3,7,21,4,7,3,4,0});
+		Solution.printListNode(list);
+		ListNode head = sol.sortList(list);
+		Solution.printListNode(head);
+		
+		list = buildListNode(new int[] {10,3,7,21,4,7,3,4,0});
+		head = sol.insertionSortList(list);
+		Solution.printListNode(head);
+		
+		ListNode n0 = new ListNode(3);
+		ListNode n1 = new ListNode(2);
+		ListNode n2 = new ListNode(0);
+		ListNode n3 = new ListNode(-4);
+		n0.next = n1;
+		n1.next = n2;
+		n2.next = n3;
+		n3.next = n1;
+		
+		System.out.println(sol.hasCycle(n0));
+		
+		ListNode r = sol.detectCycle(n0);
+		System.out.println(r.val);
+		
+		//String s = "leetcode";
+		//Set<String> dict = new HashSet<String>();
+		//dict.add("leet");
+		//dict.add("code");
+		/*
+		String s = "anavebaron";
+		Set<String> dict = buildSet(new String[] {"a","an","ave","bar","baron","nave","on"});
+		//System.out.println(sol.wordBreak(s, dict));
+		
+		s = "catsanddog";
+		dict = buildSet(new String[]{"cat", "cats", "and", "sand", "dog"});
+		List<String> rr = sol.wordBreak(s, dict);
+		for (int i = 0; i < rr.size(); ++i) {
+			
+			System.out.println(rr.get(i));
+		}*/
+		
+		ListNode list2 = buildListNode(new int[]{1,2,3,4});
+		sol.reorderList(list2);
+		Solution.printListNode(list2);
+		
+		int[] gas = new int[] {2,4};
+		int[] cost = new int[] {3,4};
+		System.out.println(sol.canCompleteCircuit(gas, cost));
+		
+	}
+	
+	public static Set<String> buildSet(String[] array) {
+		
+		Set<String> set = new HashSet<String>();
+		for (int i = 0; i < array.length; ++i) {
+			
+			set.add(array[i]);
+		}
+		return set;
+	}
+	
+	public static ListNode buildListNode(int[] array) {
+		
+		ListNode head = new ListNode(array[0]);
+		
+		ListNode p = head;
+		for (int i = 1; i < array.length; ++i) {
+			
+			p.next = new ListNode(array[i]);
+			p = p.next;
+		}
+		
+		return head;
 	}
 	
 	public static void runInterview() {
@@ -132,7 +215,7 @@ public class MyMain {
 			{17,16,15,14,13,12,11}
 		};
 		
-		iv.printMatrix(array3, 7, 5);
+		//iv.printMatrix(array3, 7, 5);
 		
 	}
 	
