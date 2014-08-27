@@ -651,6 +651,9 @@ public class Solution {
 	 *   ["aa","b"],
 	 *   ["a","a","b"]
 	 * ]
+	 * 
+	 * Time Limit Exceeded
+	 * "eegiicgaeadbcfacfhifdbiehbgejcaeggcgbahfcajfhjjdgj"
 	 */
 	
 	private List<List<String>> resList = null;
@@ -661,16 +664,7 @@ public class Solution {
 		
 		resList = new ArrayList<List<String>>();
 		
-		int strlen = s.length();
-		/*
-		List<String> list = new ArrayList<String>();
-		for (int i = 0; i < strlen; ++i) {
-			
-			list.add(String.format("%s", s.charAt(i)));
-		}
-		resList.add(new ArrayList<String>(list));
-		list.clear();*/
-		
+		int strlen = s.length();		
 		for (int i = 0; i < strlen; ++i) {
 			
 			List<String> list = new ArrayList<String>();
@@ -751,4 +745,156 @@ public class Solution {
 		}
 		System.out.println("]");
 	}
+	
+	/*
+	 * Sum Root to Leaf Numbers
+	 * Given a binary tree containing digits from 0-9 only, each root-to-leaf path could represent a number.
+	 * An example is the root-to-leaf path 1->2->3 which represents the number 123.
+	 * Find the total sum of all root-to-leaf numbers.
+	 * For example,
+	 *    1
+	 *   / \
+	 *  2   3
+	 *  The root-to-leaf path 1->2 represents the number 12.
+	 *  The root-to-leaf path 1->3 represents the number 13.
+	 *  Return the sum = 12 + 13 = 25.
+	 *  
+	 *  ACCEPTED
+	 */
+	public int sumNumbers(TreeNode root) {
+        
+		int sum = 0;
+		if (root == null) return 0;
+		
+		List<String> list = new ArrayList<String>();
+		String num = "";
+		searchDLS(root, num, list);
+		
+		for (int i = 0; i < list.size(); ++i) {
+			
+			int number = Integer.parseInt(list.get(i));
+			//System.out.println(number);
+			sum += number;
+		}
+		
+		return sum;
+    }
+	
+	private void searchDLS(TreeNode node, String num, List<String> resList) {
+		
+		if (node == null) {
+			
+			return;
+		}
+		
+		num += String.format("%d", node.val);
+		searchDLS(node.left, num, resList);
+		searchDLS(node.right, num, resList);
+		
+		if (node.left == null && node.right == null) {
+			
+			resList.add(num);
+			return;
+		}
+	}
+	
+	/*
+	 * Longest Consecutive Sequence
+	 * 
+	 * Given an unsorted array of integers, find the length of the longest consecutive elements sequence.
+	 * For example,
+	 * Given [100, 4, 200, 1, 3, 2],
+	 * The longest consecutive elements sequence is [1, 2, 3, 4]. Return its length: 4.
+	 * Your algorithm should run in O(n) complexity.
+	 * 
+	 * Runtime Error Message:	Line 16: java.lang.ArrayIndexOutOfBoundsException: -1
+	 * Last executed input:	[0,-1]
+	 * 
+	 * Runtime Error Message:	Line 15: java.lang.NegativeArraySizeException
+	 * Last executed input:	[2147483646,-2147483647,0,2,2147483644,-2147483645,2147483645]
+
+	 */
+	public int longestConsecutive(int[] num) {
+		
+		if (num == null || num.length == 0) return 0;
+		if (num.length == 1) return 1;
+		
+		long max = Integer.MIN_VALUE;
+		long min = Integer.MAX_VALUE;
+		for (int i = 0; i < num.length; ++i) {
+			
+			if (num[i] > max) max = num[i];
+			if (num[i] < min) min = num[i];
+		}
+		
+		long size = (max - min + 1);
+		size = size/ 63 + 1;
+		//int size = (max - min + 1) / 63 + 1;
+		//int[] array = new int[max - min + 1];  // <-- java.lang.NegativeArraySizeException
+		long[] array = new long[(int)size];
+		for (int i = 0; i < num.length; ++i) {
+			
+			//array[num[i] - min] = 1;
+			this.putNum(array, num[i]);
+		}
+		
+		int maxLength = 0;
+		int len = 0;
+		int i = 0;
+		for (; i < array.length; ++i) {
+			
+			for (int j = 0; j < 32; ++j) {
+				
+				int index = i * 31 + j;
+				boolean is = getNum(array, index);
+				
+				if (is == true) {
+					
+					len++;
+				}
+				else {
+					
+					if (len > maxLength)
+						maxLength = len;
+					
+					len = 0;
+				}
+			}
+		}
+		if (len > maxLength) maxLength = len;
+		
+		return maxLength;
+    }
+	
+	private void putNum(long[] array, long index) {
+		
+		int i = (int)index / 63;
+		int j = (int)index % 63;
+		
+		long number = array[i];
+		long mask = 1;
+		while (j > 0) {
+			
+			mask = mask << 1;
+			j--;
+		}
+		number = number | mask;
+	}
+	
+	private boolean getNum(long[] array, long index) {
+		
+		int i = (int)index / 63;
+		int j = (int)index % 63;
+		
+		long number = array[i];
+		long mask = 1;
+		while (j > 0) {
+			
+			mask = mask << 1;
+			j--;
+		}
+		
+		return (number & mask) == mask;
+	}
+	
 }

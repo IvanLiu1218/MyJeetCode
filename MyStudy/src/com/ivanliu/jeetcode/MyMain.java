@@ -1,6 +1,5 @@
 package com.ivanliu.jeetcode;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -108,10 +107,45 @@ public class MyMain {
 		System.out.println(sol.canCompleteCircuit(gas, cost));
 		
 		// Palindrome Partitioning
-		String input2 = "aaaab";
-		List<List<String>> resList = sol.partition(input2);
-		Solution.printListII(resList);
+		//String input2 = "eegiicgaeadbcfacfhifdbiehbgejcaeggcgbahfcajfhjjdgj";
+		//List<List<String>> resList = sol.partition(input2);
+		//Solution.printListII(resList);
 		
+		// Sum Root to Leaf Numbers
+		TreeNode root = buildTree();
+		System.out.println(sol.sumNumbers(root));
+		
+		// Longest Consecutive Sequence
+		System.out.println(sol.longestConsecutive(new int[] {2147483646,-2147483647,0,2,2147483644,-2147483645,2147483645}));
+	}
+	
+	/*
+	 *       1
+	 *     /  \
+	 *    2    3
+	 *   / \  / \
+	 *  4  5  6  7
+	 *      \   /
+	 *       8 9
+	 */
+	public static TreeNode buildTree() {
+		
+		TreeNode root = new TreeNode(1);
+		
+		TreeNode left = new TreeNode(2);
+		left.left = new TreeNode(4);
+		left.right = new TreeNode(5);
+		left.right.right = new TreeNode(8);
+		
+		TreeNode right = new TreeNode(3);
+		right.left = new TreeNode(6);
+		right.right = new TreeNode(7);
+		right.right.left = new TreeNode(9);
+		
+		root.left = left;
+		root.right = right;
+		
+		return root;
 	}
 	
 	public static Set<String> buildSet(String[] array) {
