@@ -1,5 +1,6 @@
 package com.ivanliu.jeetcode;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class MyMain {
 
 	}
 	
+	@SuppressWarnings("serial")
 	public static void runJettCode() {
 		
 		Solution sol = new Solution();
@@ -112,11 +114,58 @@ public class MyMain {
 		//Solution.printListII(resList);
 		
 		// Sum Root to Leaf Numbers
-		TreeNode root = buildTree();
-		System.out.println(sol.sumNumbers(root));
+		//TreeNode root = buildTree();
+		//System.out.println(sol.sumNumbers(root));
 		
 		// Longest Consecutive Sequence
-		System.out.println(sol.longestConsecutive(new int[] {2147483646,-2147483647,0,2,2147483644,-2147483645,2147483645}));
+		//System.out.println(sol.longestConsecutive(new int[] {2147483646,-2147483647,0,2,2147483644,-2147483645,2147483645}));
+		
+		
+		// Best Time to Buy and Sell Stock
+		//int[] prices = new int[] {};
+		//int profit = sol.maxProfit(prices);
+		//System.out.println(profit);
+		/*
+		List<List<Integer>> triangle = new ArrayList<List<Integer>>();
+		List<Integer> tlist = new ArrayList<Integer>();
+		tlist.add(2);
+		triangle.add(tlist);
+		tlist = new ArrayList<Integer>();
+		tlist.add(3);
+		tlist.add(4);
+		triangle.add(tlist);
+		tlist = new ArrayList<Integer>();
+		tlist.add(6);
+		tlist.add(5);
+		tlist.add(7);
+		triangle.add(tlist);
+		tlist = new ArrayList<Integer>();
+		tlist.add(4);
+		tlist.add(1);
+		tlist.add(8);
+		tlist.add(3);
+		triangle.add(tlist);
+		*/
+		/*
+		List<List<Integer>> triangle = new ArrayList<List<Integer>>();
+		List<Integer> tlist = new ArrayList<Integer>();
+		tlist.add(-1);
+		triangle.add(tlist);
+		tlist = new ArrayList<Integer>();
+		tlist.add(2);
+		tlist.add(3);
+		triangle.add(tlist);
+		tlist = new ArrayList<Integer>();
+		tlist.add(1);
+		tlist.add(-1);
+		tlist.add(-3);
+		triangle.add(tlist);
+		*/
+		List<List<Integer>> triangle = new ArrayList<List<Integer>>();
+		List<Integer> tlist = new ArrayList<Integer>();
+		tlist.add(-1);
+		triangle.add(tlist);
+		System.out.println(sol.minimumTotal(triangle));
 	}
 	
 	/*

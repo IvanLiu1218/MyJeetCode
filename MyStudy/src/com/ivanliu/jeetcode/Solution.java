@@ -897,4 +897,148 @@ public class Solution {
 		return (number & mask) == mask;
 	}
 	
+	/*
+	 * Best Time to Buy and Sell Stock
+	 * 
+	 * Say you have an array for which the i-th element is the price of a given stock on day i.
+	 * If you were only permitted to complete at most one transaction 
+	 * (ie, buy one and sell one share of the stock), design an algorithm to find the maximum profit.
+	 * 
+	 * ACCEPTED
+	 * 
+	 */
+	public int maxProfitI(int[] prices) {
+        
+		if (prices == null || prices.length == 0) return 0;
+		
+		int maxProfit = Integer.MIN_VALUE;
+		for (int i = 0; i < prices.length; ++i) {
+			
+			int buy = prices[i];
+			int sell = prices[i];
+			for (int j = i + 1; j < prices.length; ++j) {
+				
+				sell = prices[j];
+				if (sell - buy > maxProfit) maxProfit = sell - buy;
+			}
+			if (sell - buy > maxProfit) maxProfit = sell - buy;
+			
+		}
+		
+		return maxProfit;
+    }
+	
+	/*
+	 * Best Time to Buy and Sell Stock II
+	 * 
+	 * Say you have an array for which the ith element is the price of a given stock on day i.
+	 * Design an algorithm to find the maximum profit. You may complete as many transactions as you like 
+	 * (ie, buy one and sell one share of the stock multiple times). However, you may not engage in multiple 
+	 * transactions at the same time (ie, you must sell the stock before you buy again).
+	 * 
+	 */
+	
+	private int maxProfitII1(int[] prices, int x, int y) {
+        
+		if (prices == null || prices.length == 0) return 0;
+		
+		int maxProfit = Integer.MIN_VALUE;
+		for (int i = 0; i < prices.length; ++i) {
+			 
+			int buy = prices[i];
+			int sell = prices[i];
+			for (int j = i + 1; j < prices.length; ++j) {
+				
+				sell = prices[j];
+				if (sell - buy > maxProfit) maxProfit = sell - buy;
+			}
+			if (sell - buy > maxProfit) maxProfit = sell - buy;
+			
+		}
+		
+		return maxProfit;
+    }
+	
+	public int maxProfit(int[] prices) {
+        
+		if (prices == null || prices.length == 0) return 0;
+		
+		for (int i = 0; i < prices.length; ++i) {
+			
+			
+		}
+		
+		return 0;
+    }
+	
+	/*
+	 * Triangle
+	 * 
+	 * Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
+	 * For example, given the following triangle
+	 * [
+	 *      [2],
+	 *     [3,4],
+	 *    [6,5,7],
+	 *   [4,1,8,3]
+	 * ]
+	 * The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).
+	 * Note:
+	 * Bonus point if you are able to do this using only O(n) extra space, where n is the total number of rows in the triangle.
+	 *   
+	 * Time Limited Exceed
+	 * 
+	 * ACCEPT
+	 */
+	/* ³¬Ê±£º
+	private int minValue = 0;
+	public int minimumTotal(List<List<Integer>> triangle) {
+        
+		minValue = Integer.MAX_VALUE;
+		int min = 0;
+		getValueFromTriangle(triangle, 0, 0, min);
+		return minValue;
+    }
+	
+	private void getValueFromTriangle(List<List<Integer>> triangle, int x, int y, int min) {
+		
+		if (x >= triangle.size()) {
+			
+			if (min < minValue) minValue = min;
+			return;
+		}
+		List<Integer> tlist = triangle.get(x);
+		if (y >= triangle.size()) {
+			
+			if (min < minValue)  minValue = min;
+			return;
+		}
+		
+		min += tlist.get(y);
+		getValueFromTriangle(triangle, x + 1, y, min);
+		getValueFromTriangle(triangle, x + 1, y + 1, min);
+	}*/
+	public int minimumTotal(List<List<Integer>> triangle) {
+		
+		if (triangle == null || triangle.size() == 0) {
+			
+			return 0;
+		}
+
+		int sizeX = triangle.size();
+		for (int i = sizeX - 2; i >= 0; --i) {
+			
+			List<Integer> tlist1 = triangle.get(i);
+			List<Integer> tlist2 = triangle.get(i + 1);
+			for (int j = tlist2.size() - 2; j >= 0; --j) {
+				
+				int a = tlist2.get(j);
+				int b = tlist2.get(j + 1);
+				tlist1.set(j, tlist1.get(j) + (a < b ? a : b));
+			}
+		}
+		
+		return triangle.get(0).get(0);
+	}
+	
 }
