@@ -166,6 +166,15 @@ public class MyMain {
 		tlist.add(-1);
 		triangle.add(tlist);
 		System.out.println(sol.minimumTotal(triangle));
+		
+		// Pascal's Triangle 
+		List<List<Integer>> llist = sol.generate(1);
+		sol.printListIntegerII(llist);
+		
+		// Pascal's Triangle II
+		System.out.println("Pascal's Triangle II");
+		sol.printListIntegerI(sol.getRow(0));
+		
 	}
 	
 	/*

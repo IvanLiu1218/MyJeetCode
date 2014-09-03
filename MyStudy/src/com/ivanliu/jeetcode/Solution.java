@@ -988,7 +988,7 @@ public class Solution {
 	 *   
 	 * Time Limited Exceed
 	 * 
-	 * ACCEPT
+	 * ACCEPTED
 	 */
 	/* ³¬Ê±£º
 	private int minValue = 0;
@@ -1041,4 +1041,139 @@ public class Solution {
 		return triangle.get(0).get(0);
 	}
 	
+	/*
+	 * Pascal's Triangle 
+	 * 
+	 * Given numRows, generate the first numRows of Pascal's triangle.
+	 * For example, given numRows = 5,
+	 * Return
+	 * [
+	 *      [1],
+	 *     [1,1],
+	 *    [1,2,1],
+	 *   [1,3,3,1],
+	 *  [1,4,6,4,1]
+	 * ]
+	 * 
+	 * ACCEPTED
+	 */
+	public List<List<Integer>> generate(int numRows) {
+		
+		List<List<Integer>> llist = new ArrayList<List<Integer>>();
+		
+		int num = numRows;
+		List<Integer> list = new ArrayList<Integer>();
+		list.add(1);
+		while (num > 0) {
+			
+			llist.add(list);
+			list = generateList(list);
+			num--;
+		}
+		
+		return llist;
+    }
+	
+	private List<Integer> generateList(List<Integer> list) {
+		
+		List<Integer> resList = new ArrayList<Integer>();
+		int prev = 0;
+		for (int i = 0 ; i < list.size(); ++i) {
+			
+			int curr = list.get(i);
+			resList.add(prev + curr);
+			prev = curr;
+		}
+		resList.add(list.get(list.size() - 1));
+		
+		return resList;
+	}
+	
+	public void printListIntegerII(List<List<Integer>> list) {
+		
+		for (int i = 0; i < list.size(); ++i) {
+			
+			List<Integer> ilist = list.get(i);
+			for (int j = 0; j < ilist.size(); ++j) {
+				
+				System.out.print(ilist.get(j) + " ");
+			}
+			System.out.println();
+		}
+	}
+	
+	/*
+	 * Pascal's Triangle II 
+	 * 
+	 * Given an index k, return the kth row of the Pascal's triangle.
+	 * For example, given k = 3,
+	 * Return [1,3,3,1].
+	 * Note:
+	 * Could you optimize your algorithm to use only O(k) extra space?
+	 * 
+	 * 
+	 * ACCEPTED
+	 */
+	public List<Integer> getRow(int rowIndex) {
+        
+		List<Integer> list = new ArrayList<Integer>();
+		
+		int index = rowIndex + 1;
+		
+		while (index > 0) {
+			
+			int prev = 0;
+			for (int i = 0; i < list.size(); ++i) {
+				
+				int curr = list.get(i);
+				list.set(i,  prev + curr);
+				prev = curr;
+			}
+			list.add(1);
+			
+			index--;
+		}
+		
+		return list;
+    }
+	
+	public void printListIntegerI(List<Integer> list) {
+		
+		for (int i = 0; i < list.size(); ++i) {
+			
+			System.out.print(list.get(i) + " ");
+		}
+		
+		System.out.println();
+	}
+
+	/*
+	 * Path Sum
+	 * 
+	 * Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
+	 * For example:
+	 * Given the below binary tree and sum = 22,
+              5
+             / \
+            4   8
+           /   / \
+          11  13  4
+         /  \      \
+        7    2      1
+	 * return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
+	 * 
+	 */
+	private int pathSum = 0;
+	
+	public boolean hasPathSum(TreeNode root, int sum) {
+        
+		
+		
+		return true;
+    }
+	
+	public void searchPath(TreeNode node, int sum) {
+		
+		
+	}
 }
