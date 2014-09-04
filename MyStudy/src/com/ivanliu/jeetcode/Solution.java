@@ -2,6 +2,7 @@ package com.ivanliu.jeetcode;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 import java.util.Set;
 
@@ -1150,7 +1151,8 @@ public class Solution {
 	/*
 	 * Path Sum
 	 * 
-	 * Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
+	 * Given a binary tree and a sum, determine if the tree has a root-to-leaf path 
+	 * such that adding up all the values along the path equals the given sum.
 	 * For example:
 	 * Given the below binary tree and sum = 22,
               5
@@ -1162,18 +1164,272 @@ public class Solution {
         7    2      1
 	 * return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
 	 * 
+	 * ACCEPTED
 	 */
-	private int pathSum = 0;
+	private boolean result = false;
 	
 	public boolean hasPathSum(TreeNode root, int sum) {
         
+		if (root == null) return false;
 		
-		
-		return true;
+		result = false;
+		int value = 0;
+		searchPath(root, value, sum);
+		return result;
     }
 	
-	public void searchPath(TreeNode node, int sum) {
+	public void searchPath(TreeNode node, int value, int sum) {
 		
+		if (node.left == null && node.right == null) {
+			
+			value += node.val;
+			if (value == sum) {
+				
+				result = true;
+			}
+		}
 		
+		value += node.val;
+		if (node.left != null) {
+			
+			searchPath(node.left, value, sum);
+		}
+		if (node.right != null) {
+			
+			searchPath(node.right, value, sum);
+		}
 	}
+	
+	/*
+	 * Path Sum II
+	 * 
+	 * Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+	 * For example:
+	 * Given the below binary tree and sum = 22,
+              5
+             / \
+            4   8
+           /   / \
+          11  13  4
+         /  \    / \
+        7    2  5   1
+     * 
+     * return
+     * [
+     *    [5,4,11,2],
+     *    [5,8,4,5]
+     * ]
+     * 
+     * ACCEPTED
+	 */
+	private List<List<Integer>> rList = null;
+	
+	public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        
+		rList = new ArrayList<List<Integer>>();
+		if (root == null) return rList;
+		
+		int value = 0;
+		List<Integer> list = new ArrayList<Integer>();
+		searchPathII(root, value, sum, list);
+		
+		return rList;
+    }
+	
+	public void searchPathII(TreeNode node, int value, int sum, List<Integer> list) {
+		
+		if (node.left == null && node.right == null) {
+			
+			value += node.val;
+			if (value == sum) {
+				
+				list.add(node.val);
+				rList.add(new ArrayList<Integer>(list));
+				list.remove(list.size() - 1);
+			}
+			return;
+		}
+		
+		value += node.val;
+		list.add(node.val);
+		
+		if (node.left != null) {
+			
+			searchPathII(node.left, value, sum, list);
+		}
+		if (node.right != null) {
+			
+			searchPathII(node.right, value, sum, list);
+		}
+		list.remove(list.size() - 1);
+	}
+	
+	/* 
+	 * Populating Next Right Pointers in Each Node
+	 * 
+	 * Given a binary tree
+	    struct TreeLinkNode {
+	      TreeLinkNode *left;
+	      TreeLinkNode *right;
+	      TreeLinkNode *next;
+	    }
+	 * Populate each next pointer to point to its next right node. 
+	 * If there is no next right node, the next pointer should be set to NULL.
+	 * Initially, all next pointers are set to NULL.
+	 * Note:
+	 * You may only use constant extra space.
+	 * You may assume that it is a perfect binary tree (ie, all leaves are at the same level, and every parent has two children).
+	 * For example,
+	 * Given the following perfect binary tree,
+	        1
+	       /  \
+	      2    3
+	     / \  / \
+	    4  5  6  7
+     * After calling your function, the tree should look like:
+	         1 -> NULL
+	       /  \
+	      2 -> 3 -> NULL
+	     / \  / \
+	    4->5->6->7 -> NULL
+	 *  
+	 * ACCEPTED
+	 */
+	public static class TreeLinkNode {
+		
+		int val;
+		TreeLinkNode left, right, next;
+		TreeLinkNode(int x) { val = x; }
+	}
+	
+	public void connectI(TreeLinkNode root) {
+        
+		if (root == null) return;
+		ArrayDeque<TreeLinkNode> queue = new ArrayDeque<TreeLinkNode>();
+		queue.add(root);
+		
+		TreeLinkNode prev = null;
+		int index = 1;
+		int factor = 1;
+		while (!queue.isEmpty()) {
+			
+			TreeLinkNode node = queue.remove();
+			if (index == factor) {
+				
+				node.next = null;
+				factor *= 2;
+				index = 0;
+				if (prev != null) prev.next = node;
+				prev = null;
+			}
+			else {
+				
+				if (prev == null) prev = node;
+				else {
+					
+					prev.next = node;
+					prev = node;
+				}
+			}
+			
+			index++;
+			
+			if (node.left != null) queue.add(node.left);
+			if (node.right != null) queue.add(node.right);
+		}
+    }
+	
+	public void printTreeLinkNode(TreeLinkNode root) {
+		
+		TreeLinkNode node = root;
+		while (node != null) {
+			
+			TreeLinkNode p = node;
+			while (p != null) {
+				
+				System.out.print(p.val + " ");
+				p = p.next;
+			}
+			System.out.println();
+			
+			if (node.left != null) node = node.left;
+			else node = node.right;
+		}
+	}
+	
+	/*
+	 * Populating Next Right Pointers in Each Node II 
+	 * 
+	 * Follow up for problem "Populating Next Right Pointers in Each Node".
+	 * What if the given tree could be any binary tree? Would your previous solution still work?
+	 * Note:
+	 * You may only use constant extra space.
+	 * For example,
+	 * Given the following binary tree,
+	         1
+	       /  \
+	      2    3
+	     / \    \
+	    4   5    7
+     * After calling your function, the tree should look like:
+	         1 -> NULL
+	       /  \
+	      2 -> 3 -> NULL
+	     / \    \
+	    4-> 5 -> 7 -> NULL
+	 *
+	 * ACCEPTED
+	 */
+	
+	public void connect(TreeLinkNode root) {
+        
+		if (root == null) return;
+		
+		Deque<TreeLinkNode> queue0 = new ArrayDeque<TreeLinkNode>();  // Queue 1
+		Deque<TreeLinkNode> queue1 = new ArrayDeque<TreeLinkNode>();  // Queue 2
+		
+		int level = 0;
+		queue0.add(root);
+		
+		TreeLinkNode prev = null;
+		while (!queue0.isEmpty() || !queue1.isEmpty()) {
+			
+			if (level % 2 == 0) {
+				
+				while (!queue0.isEmpty()) {
+					
+					TreeLinkNode node = queue0.remove();
+					if (prev == null) prev = node;
+					else {
+						
+						prev.next = node;
+						prev = node;
+					}
+					if (node.left != null) queue1.add(node.left);
+					if (node.right != null) queue1.add(node.right);
+				}
+				prev.next = null;
+				prev = null;
+			}
+			else {
+				
+				while (!queue1.isEmpty()) {
+					
+					TreeLinkNode node = queue1.remove();
+					if (prev == null) prev = node;
+					else {
+						
+						prev.next = node;
+						prev = node;
+					}
+					if (node.left != null) queue0.add(node.left);
+					if (node.right != null) queue0.add(node.right);
+				}
+				prev.next = null;
+				prev = null;
+			}
+			level++;
+		}
+    }
+	
 }

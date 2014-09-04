@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.ivanliu.jeetcode.Solution.ListNode;
+import com.ivanliu.jeetcode.Solution.TreeLinkNode;
 import com.ivanliu.jeetcode.Solution.TreeNode;
 
 public class MyMain {
@@ -175,6 +176,125 @@ public class MyMain {
 		System.out.println("Pascal's Triangle II");
 		sol.printListIntegerI(sol.getRow(0));
 		
+		// Path Sum
+		System.out.println("Path Sum");
+		TreeNode root = buildTree01();
+		System.out.println(sol.hasPathSum(root, 22));
+		
+		// Path Sum II
+		System.out.println("Path Sum II");
+		root = buildTree02();
+		List<List<Integer>> rlist = sol.pathSum(root, 22);
+		sol.printListIntegerII(rlist);
+		
+		// Populating Next Right Pointers in Each Node
+		System.out.println("Populating Next Right Pointers in Each Node");
+		TreeLinkNode treeLink = buildTreeLinkI();
+		sol.connectI(treeLink);
+		sol.printTreeLinkNode(treeLink);
+		
+		// Populating Next Right Pointers in Each Node II
+		System.out.println("Populating Next Right Pointers in Each Node II");
+		treeLink = buildTreeLinkII();
+		sol.connect(treeLink);
+		sol.printTreeLinkNode(treeLink);
+	}
+	
+	public static TreeLinkNode buildTreeLinkI() {
+		
+		TreeLinkNode root = new TreeLinkNode(1);
+		root.left = new TreeLinkNode(2);
+		root.left.left = new TreeLinkNode(4);
+		root.left.left.left = new TreeLinkNode(8);
+		root.left.left.right = new TreeLinkNode(9);
+		root.left.right = new TreeLinkNode(5);
+		root.left.right.left = new TreeLinkNode(10);
+		root.left.right.right = new TreeLinkNode(11);
+		
+		root.right = new TreeLinkNode(3);
+		root.right.left = new TreeLinkNode(6);
+		root.right.left.left = new TreeLinkNode(12);
+		root.right.left.right = new TreeLinkNode(13);
+		root.right.right = new TreeLinkNode(7);
+		root.right.right.left = new TreeLinkNode(14);
+		root.right.right.right = new TreeLinkNode(15);
+		
+		return root;
+	}
+	
+	public static TreeLinkNode buildTreeLinkII() {
+		
+		TreeLinkNode root = new TreeLinkNode(1);
+		/*
+		root.left = new TreeLinkNode(2);
+		root.left.left = new TreeLinkNode(4);
+		root.left.left.left = new TreeLinkNode(8);
+		//root.left.left.right = new TreeLinkNode(9);
+		root.left.right = new TreeLinkNode(5);
+		root.left.right.left = new TreeLinkNode(10);
+		root.left.right.right = new TreeLinkNode(11);*/
+		
+		root.right = new TreeLinkNode(3);
+		root.right.left = new TreeLinkNode(6);
+		//root.right.left.left = new TreeLinkNode(12);
+		root.right.left.right = new TreeLinkNode(13);
+		root.right.right = new TreeLinkNode(7);
+		root.right.right.left = new TreeLinkNode(14);
+		root.right.right.right = new TreeLinkNode(15);
+		
+		return root;
+	}
+	
+	/*        5
+             / \
+            4   8
+           /   / \
+          11  13  4
+         /  \      \
+        7    2      1
+    */
+	
+	public static TreeNode buildTree01() {
+		
+		TreeNode root = new TreeNode(5);
+		
+		root.left = new TreeNode(4);
+		root.left.left = new TreeNode(11);
+		root.left.left.left = new TreeNode(7);
+		root.left.left.right = new TreeNode(2);
+		
+		root.right = new TreeNode(8);
+		root.right.left = new TreeNode(13);
+		root.right.right = new TreeNode(4);
+		root.right.right.right = new TreeNode(1);
+		
+		return root;
+	}
+	
+	/*        5
+             / \
+            4   8
+           /   / \
+          11  13  4
+         /  \    / \
+        7    2  5   1
+	 */
+	public static TreeNode buildTree02() {
+		
+		TreeNode root = new TreeNode(5);
+		/*
+		root.left = new TreeNode(4);
+		root.left.left = new TreeNode(11);
+		root.left.left.left = new TreeNode(7);
+		root.left.left.right = new TreeNode(2);
+		
+		root.right = new TreeNode(8);
+		root.right.left = new TreeNode(13);
+		root.right.right = new TreeNode(4);
+		root.right.right.left = new TreeNode(5);
+		root.right.right.right = new TreeNode(1);
+		*/
+		return root;
 	}
 	
 	/*
