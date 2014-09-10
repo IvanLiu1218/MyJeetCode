@@ -198,6 +198,63 @@ public class MyMain {
 		treeLink = buildTreeLinkII();
 		sol.connect(treeLink);
 		sol.printTreeLinkNode(treeLink);
+		
+		// Flatten Binary Tree to Linked List
+		System.out.println("Flatten Binary Tree to Linked List");
+		TreeNode root01 = buildTreeNode01();
+		sol.flatten(root01);
+		sol.printTreeNodeRight(root01);
+		
+		// Minimum Depth of Binary Tree
+		System.out.println("Minimum Depth of Binary Tree");
+		TreeNode root02 = buildTreeNode02();
+		System.out.println(sol.minDepth(root02));
+		
+		// Maximum Depth of Binary Tree
+		System.out.println("Maximum Depth of Binary Tree");
+		TreeNode root03 = buildTreeNode02();
+		System.out.println(sol.maxDepth(root03));
+		
+		// Construct Binary Tree from Preorder and Inorder Traversal
+		System.out.println("Construct Binary Tree from Preorder and Inorder Traversal");
+		int[] preorder = new int[]{1, 2, 4, 5, 3, 6, 7};
+		int[] inorder  = new int[]{4, 2, 5, 1, 6, 3, 7};
+		TreeNode root04 = sol.buildTreeI(preorder, inorder);
+		sol.printTreeNode(root04);
+		
+		// Construct Binary Tree from Inorder and Postorder Traversal 
+		System.out.println("Construct Binary Tree from Inorder and Postorder Traversal");
+		int[] postorder = new int[]{4, 5, 2, 6, 7, 3, 1};
+		inorder  = new int[]{4, 2, 5, 1, 6, 3, 7};
+		TreeNode root05 = sol.buildTree(inorder, postorder);
+		sol.printTreeNode(root05);
+	}
+	
+	public static TreeNode buildTreeNode02() {
+		
+		TreeNode root = new TreeNode(1);
+		root.left = new TreeNode(2);
+		root.left.right = new TreeNode(3);
+		root.left.right.left = new TreeNode(0);
+		
+		root.right = new TreeNode(4);
+		root.right.left = new TreeNode(5);
+		root.right.right = new TreeNode(6);
+		
+		return root;
+	}
+	
+	public static TreeNode buildTreeNode01() {
+		
+		TreeNode root = new TreeNode(1);
+		//root.left = new TreeNode(2);
+		//root.left.left = new TreeNode(3);
+		//root.left.right = new TreeNode(4);
+		
+		//root.right = new TreeNode(5);
+		//root.right.right = new TreeNode(6);
+		
+		return root;
 	}
 	
 	public static TreeLinkNode buildTreeLinkI() {

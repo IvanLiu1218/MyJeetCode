@@ -1432,4 +1432,289 @@ public class Solution {
 		}
     }
 	
+	/*
+	 * Flatten Binary Tree to Linked List 
+	 * 
+	 * Given a binary tree, flatten it to a linked list in-place.
+	 * For example,
+	 * Given
+	         1
+	        / \
+	       2   5
+	      / \   \
+	     3   4   6
+     * The flattened tree should look like:
+		   1
+		    \
+		     2
+		      \
+		       3
+		        \
+		         4
+		          \
+		           5
+		            \
+		             6
+     * click to show hints.
+     * Hints:
+     * If you notice carefully in the flattened tree, each node's right child points to the next node of a pre-order traversal.
+     * 
+     * ACCEPTED
+	 */
+	private List<TreeNode> nodeList = null;
+	
+	public void flatten(TreeNode root) {
+		
+		nodeList = new ArrayList<TreeNode>();
+		searchTreeNLR(root);
+		
+		TreeNode prev = new TreeNode(0);
+		for (int i = 0; i < nodeList.size(); ++i) {
+			
+			TreeNode node = nodeList.get(i);
+			node.left = null;
+			prev.right = node;
+			prev = node;
+		}
+    }
+	
+	private void searchTreeNLR(TreeNode node) {
+		
+		if (node == null) return;
+		
+		nodeList.add(node);
+		searchTreeNLR(node.left);
+		searchTreeNLR(node.right);
+	}
+	
+	public void printTreeNodeRight(TreeNode root) {
+		
+		TreeNode node = root;
+		while (node != null) {
+			
+			System.out.print(node.val + " ");
+			node = node.right;
+		}
+		System.out.println();
+	}
+	
+	/*
+	 * Minimum Depth of Binary Tree
+	 * 
+	 * Given a binary tree, find its minimum depth.
+	 * The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
+	 * 
+	 * ACCEPTED
+	 */
+	private int minDepth = Integer.MAX_VALUE;
+	public int minDepth(TreeNode root) {
+        
+		if (root == null) return 0;
+		
+		minDepth = Integer.MAX_VALUE;
+		int depth = 0;
+		searchTreeMin(root, depth);
+		return minDepth;
+    }
+	
+	private void searchTreeMin(TreeNode node, int depth) {
+		
+		if (node.left == null && node.right == null) {
+			
+			depth++;
+			if (depth < minDepth)
+				minDepth = depth;
+			return;
+		}
+		
+		depth++;
+		if (node.left != null) searchTreeMin(node.left, depth);
+		if (node.right != null) searchTreeMin(node.right, depth);
+		
+	}
+	
+	/*
+	 * Maximum Depth of Binary Tree
+	 * 
+	 * Given a binary tree, find its maximum depth.
+	 * The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+	 * 
+	 * ACCEPTED
+	 */
+	private int maxDepth = Integer.MIN_VALUE;
+	public int maxDepth(TreeNode root) {
+        
+		if (root == null) return 0;
+		
+		maxDepth = Integer.MIN_VALUE;
+		int depth = 0;
+		searchTreeMax(root, depth);
+		return maxDepth;
+    }
+	
+	private void searchTreeMax(TreeNode node, int depth) {
+		
+		if (node.left == null && node.right == null) {
+			
+			depth++;
+			if (depth > maxDepth)
+				maxDepth = depth;
+			return;
+		}
+		
+		depth++;
+		if (node.left != null) searchTreeMax(node.left, depth);
+		if (node.right != null) searchTreeMax(node.right, depth);
+		
+	}
+	
+	/*
+	 * Construct Binary Tree from Preorder and Inorder Traversal 
+	 * 
+	 * Given preorder and inorder traversal of a tree, construct the binary tree.
+	 * Note:
+	 * You may assume that duplicates do not exist in the tree.
+	 * 
+	 * ACCEPTED
+	 */
+	public TreeNode buildTreeI(int[] preorder, int[] inorder) {
+        
+		if (preorder == null || preorder.length == 0) return null;
+		if (inorder == null || inorder.length == 0) return null;
+		if (preorder.length != inorder.length) return null;
+		
+		TreeNode root = new TreeNode(preorder[0]);
+		int rootIndex = findIndex(inorder, root.val, preorder.length);
+		root.left = buildI(preorder, 1, 1 + rootIndex, inorder, 0, rootIndex);
+		root.right = buildI(preorder, 1 + rootIndex, preorder.length, inorder, rootIndex + 1, inorder.length);
+		
+		return root;
+    }
+	
+	private TreeNode buildI(int[] preorder, int x1, int y1, int[] inorder, int x2, int y2) {
+		
+		if (preorder == null || preorder.length == 0 || x1 >= preorder.length) return null;
+		if (inorder == null || inorder.length == 0 || x2 >= inorder.length) return null;
+		
+		TreeNode root = null;
+		if (x1 != y1 && x2 != y2) {
+			
+			root = new TreeNode(preorder[x1]);
+			int rootIndex = findIndex(inorder, root.val, preorder.length);
+			root.left = buildI(preorder, x1 + 1, x1 + 1 + rootIndex - x2, inorder, x2, rootIndex);
+			root.right = buildI(preorder, x1 + 1 + rootIndex - x2, y1, inorder, rootIndex + 1, y2);
+		}
+		
+		return root;
+	}
+	
+	/*
+	 * Construct Binary Tree from Inorder and Postorder Traversal
+	 * 
+	 * Given inorder and postorder traversal of a tree, construct the binary tree.
+	 * Note:
+	 * You may assume that duplicates do not exist in the tree.
+	 * 
+	 * ACCEPTED
+	 * 
+	 */
+	public TreeNode buildTree(int[] inorder, int[] postorder) {
+        
+		if (postorder == null || postorder.length == 0) return null;
+		if (inorder == null || inorder.length == 0) return null;
+		if (postorder.length != inorder.length) return null;
+		
+		TreeNode root = new TreeNode(postorder[postorder.length - 1]);
+		int rootIndex = findIndex(inorder, root.val, postorder.length);
+		int x1 = 0;
+		int y1 = rootIndex;
+		int x2 = 0;
+		int y2 = rootIndex;
+		root.left = buildII(postorder, x1, y1, inorder, x2, y2);
+		
+		x1 = y1;
+		y1 = postorder.length - 1;
+		x2 = rootIndex + 1;
+		y2 = inorder.length;
+		root.right = buildII(postorder, x1, y1, inorder, x2, y2);
+		
+		return root;
+    }
+	
+	private TreeNode buildII(int[] postorder, int x1, int y1, int[] inorder, int x2, int y2) {
+		
+		if (postorder == null || postorder.length == 0 || x1 >= postorder.length) return null;
+		if (inorder == null || inorder.length == 0 || x2 >= inorder.length) return null;
+		
+		TreeNode root = null;
+		if (x1 != y1 && x2 != y2) {
+			
+			root = new TreeNode(postorder[y1 - 1]);
+			int rootIndex = findIndex(inorder, root.val, postorder.length);
+			root.left = buildII(postorder, x1, x1 + rootIndex - x2, inorder, x2, rootIndex);
+			root.right = buildII(postorder, x1 + rootIndex - x2, y1 - 1, inorder, rootIndex + 1, y2);
+		}
+		
+		return root;
+	}
+	
+	private int findIndex(int[] array, int val, int end) {
+		
+		for (int i = 0; i < Math.min(array.length, end); ++i) {
+			
+			if (array[i] == val) return i;
+		}
+		return -1;
+	}
+
+	// print Tree
+	public void printTreeNode(TreeNode root) {
+		
+		Deque<TreeNode> queue = new ArrayDeque<TreeNode>();
+		queue.add(root);
+		queue.add(new TreeNode(-1));
+		while (queue.size() != 0) {
+			
+			TreeNode node = queue.remove();
+			if (node.val != -1) {
+				
+				System.out.print(node.val + " ");
+				if (node.left != null) queue.add(node.left);
+				if (node.right != null) queue.add(node.right);
+			}
+			else {
+				
+				System.out.println();
+				if (queue.size() != 0) queue.add(new TreeNode(-1));
+			}
+		}
+	}
+	
+	
+	
+	
+	/*
+	 * Balanced Binary Tree
+	 * 
+	 * Given a binary tree, determine if it is height-balanced.
+	 * For this problem, a height-balanced binary tree is defined as a binary tree 
+	 * in which the depth of the two subtrees of every node never differ by more than 1.
+	 */
+	
+	public boolean isBalanced(TreeNode root) {
+		
+		
+        int leftHeight = getTreeHeight(root.left);
+        int rightHeight = getTreeHeight(root.right);
+        int delta = Math.abs(leftHeight - rightHeight);
+        
+        return delta <= 1;
+        
+    }
+	
+	private int getTreeHeight(TreeNode node) {
+		
+		
+		return 0;
+	}
 }
