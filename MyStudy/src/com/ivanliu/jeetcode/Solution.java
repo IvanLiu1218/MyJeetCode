@@ -1690,6 +1690,331 @@ public class Solution {
 		}
 	}
 	
+	/*
+	 * Binary Tree Level Order Traversal
+	 * 
+	 * Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
+	 * For example:
+	 * Given binary tree {3,9,20,#,#,15,7},
+		    3
+		   / \
+		  9  20
+		    /  \
+		   15   7
+     * return its level order traversal as:
+		[
+		  [3],
+		  [9,20],
+		  [15,7]
+		]
+     * confused what "{1,#,2,3}" means? > read more on how binary tree is serialized on OJ.
+     * OJ's Binary Tree Serialization:
+     * The serialization of a binary tree follows a level order traversal, 
+     * where '#' signifies a path terminator where no node exists below.
+     * Here's an example:
+		   1
+		  / \
+		 2   3
+		    /
+		   4
+		    \
+		     5
+     * The above binary tree is serialized as "{1,2,3,#,#,4,#,#,5}".
+	 * 
+	 * ACCEPTED
+	 */
+	public List<List<Integer>> levelOrder(TreeNode root) {
+        
+		List<List<Integer>> rList = new ArrayList<List<Integer>>();
+		
+		if (root == null) return rList;
+		
+		Deque<TreeNode> queue = new ArrayDeque<TreeNode>();
+		queue.add(root);
+		queue.add(new TreeNode(Integer.MAX_VALUE));
+		
+		List<Integer> list = new ArrayList<Integer>();
+		
+		while (queue.size() != 0) {
+			
+			TreeNode node = queue.remove();
+			if (node.val != Integer.MAX_VALUE) {
+				
+				list.add(node.val);
+				if (node.left != null) queue.add(node.left);
+				if (node.right != null) queue.add(node.right);
+			}
+			else {
+				
+				if (queue.size() != 0) {
+					
+					queue.add(new TreeNode(Integer.MAX_VALUE));
+				}
+				rList.add(list);
+				list = new ArrayList<Integer>();
+			}
+			
+		}
+		
+		return rList;
+    }
+	
+	/*
+	 * Binary Tree Zigzag Level Order Traversal
+	 * 
+	 * Given a binary tree, return the zigzag level order traversal of its nodes' values. 
+	 * (ie, from left to right, then right to left for the next level and alternate between).
+	 * For example:
+	 * Given binary tree {3,9,20,#,#,15,7},
+		    3
+		   / \
+		  9  20
+		    /  \
+		   15   7
+     * return its zigzag level order traversal as:
+		[
+		  [3],
+		  [20,9],
+		  [15,7]
+		]
+	 * 
+	 * ACCEPTED
+	 */
+	public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        
+		List<List<Integer>> rList = new ArrayList<List<Integer>>();
+		
+		if (root == null) return rList;
+		
+		Deque<TreeNode> stack1 = new ArrayDeque<TreeNode>();
+		Deque<TreeNode> stack2 = new ArrayDeque<TreeNode>();
+		stack1.push(root);
+		int level = 1;
+		List<Integer> list = new ArrayList<Integer>();
+		while (stack1.size() != 0 || stack2.size() != 0) {
+			
+			if (level % 2 == 1) {
+				
+				TreeNode node = stack1.pop();
+				list.add(node.val);
+				if (node.left != null) stack2.push(node.left);
+				if (node.right != null) stack2.push(node.right);
+				
+				if (stack1.size() == 0) {
+					
+					level++;
+					rList.add(list);
+					list = new ArrayList<Integer>();
+				}
+			}
+			else {
+				
+				TreeNode node = stack2.pop();
+				list.add(node.val);
+				if (node.right != null) stack1.push(node.right);
+				if (node.left != null) stack1.push(node.left);
+				
+				if (stack2.size() == 0) {
+					
+					level++;
+					rList.add(list);
+					list = new ArrayList<Integer>();
+				}
+			}
+		}
+		
+		
+		return rList;
+    }
+	
+	/*
+	 * Symmetric Tree
+	 * 
+	 * Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+	 * For example, this binary tree is symmetric:
+		    1
+		   / \
+		  2   2
+		 / \ / \
+		3  4 4  3
+     * But the following is not:
+		    1
+		   / \
+		  2   2
+		   \   \
+		   3    3
+     * Note:
+     * Bonus points if you could solve it both recursively and iteratively.
+     * 
+     * Wrong Answer
+     * Input:	{4,-57,-57,#,67,67,#,#,-97,-97}
+     * Output:	false
+     * Expected:	true
+     * 
+     * ACCEPTED
+	 */
+	List<List<String>> strList = null;
+	public boolean isSymmetric(TreeNode root) {
+		
+		if (root == null) return true;
+        
+		strList = new ArrayList<List<String>>();
+		
+		List<String> path = new ArrayList<String>();
+		searchTreeNode(root, path);
+		
+		//Utility.printListList(strList);
+		
+		int size = strList.size();
+		int middle = size / 2;
+		for (int i = 0; i < middle; ++i) {
+			
+			List<String> list1 = strList.get(i);
+			List<String> list2 = strList.get(size - 1 - i);
+			if (!list1.equals(list2)) {
+				return false;
+			}
+		}
+		return true;
+    }
+	
+	private void searchTreeNode(TreeNode node, List<String> path) {
+		
+		if (node == null) {
+			
+			path.add("#");
+			strList.add(new ArrayList<String>(path));
+			path.remove(path.size() - 1);
+			return;
+		}
+		
+		path.add(String.format("%d", node.val));
+		searchTreeNode(node.left, path);
+		searchTreeNode(node.right, path);
+		path.remove(path.size() - 1);
+	}
+	
+	/*
+	 * Same Tree
+	 * 
+	 * Given two binary trees, write a function to check if they are equal or not.
+	 * Two binary trees are considered equal if they are structurally identical and the nodes have the same value.
+	 * 
+	 * ACCEPTED
+	 */
+	public boolean isSameTree(TreeNode p, TreeNode q) {
+        
+		List<List<String>> pAllPath = new ArrayList<List<String>>();
+		List<String> pPath = new ArrayList<String>();
+		getTreePath(p, pPath, pAllPath);
+		//Utility.printListList(pAllPath);
+		
+		List<List<String>> qAllPath = new ArrayList<List<String>>();
+		List<String> qPath = new ArrayList<String>();
+		getTreePath(q, qPath, qAllPath);
+		//Utility.printListList(qAllPath);
+		
+		return pAllPath.equals(qAllPath);
+    }
+	
+	private void getTreePath(TreeNode node, List<String> path, List<List<String>> allPath) {
+		
+		if (node == null) {
+			
+			path.add("#");
+			allPath.add(new ArrayList<String>(path));
+			path.remove(path.size() - 1);
+			return;
+		}
+		
+		path.add(String.format("%d", node.val));
+		getTreePath(node.left, path, allPath);
+		getTreePath(node.right, path, allPath);
+		path.remove(path.size() - 1);
+	}
+	
+	/*
+	 * Binary Tree Inorder Traversal 
+	 * 
+	 * Given a binary tree, return the inorder traversal of its nodes' values.
+	 * For example:
+	 * Given binary tree {1,#,2,3},
+		   1
+		    \
+		     2
+		    /
+		   3
+     * return [1,3,2].
+     * Note: Recursive solution is trivial, could you do it iteratively?
+     * 
+     * 
+	 */
+	public List<Integer> inorderTraversal(TreeNode root) {
+        
+		List<Integer> rList = new ArrayList<Integer>();
+		if (root == null) return rList;
+		
+		Deque<TreeNode> stack = new ArrayDeque<TreeNode>();
+		stack.push(root);
+		
+		while (stack.size() != 0) {
+			
+			TreeNode node = stack.getFirst();
+			while (node.left != null) {
+				
+				stack.push(node.left);
+				node = stack.getFirst();
+			}
+			
+			node = stack.remove();
+			while (stack.size() >= 0) {
+				
+				rList.add(node.val);
+				if (node.right != null) {
+					
+					stack.push(node.right);
+					break;
+				}
+				if (stack.size() != 0) {
+					
+					node = stack.remove();
+				}
+				else {
+					
+					break;
+				}
+			}
+			
+			/*
+			while (stack.size() != 0) {
+				
+				rList.add(node.val);
+				if (node.right != null) {
+					
+					stack.push(node.right);
+				}
+				node = stack.remove();
+			}
+			rList.add(node.val);
+			if (node.right != null) {
+				
+				stack.push(node.right);
+			}*/
+		}
+		
+		return rList;
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

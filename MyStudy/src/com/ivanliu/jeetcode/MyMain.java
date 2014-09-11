@@ -228,6 +228,120 @@ public class MyMain {
 		inorder  = new int[]{4, 2, 5, 1, 6, 3, 7};
 		TreeNode root05 = sol.buildTree(inorder, postorder);
 		sol.printTreeNode(root05);
+		
+		// Binary Tree Level Order Traversal
+		System.out.println("Binary Tree Level Order Traversal");
+		TreeNode root06 = buildTreeNode06();
+		List<List<Integer>> rlist06 = sol.levelOrder(root06);
+		sol.printListIntegerII(rlist06);
+		
+		// Binary Tree Zigzag Level Order Traversal
+		System.out.println("Binary Tree Zigzag Level Order Traversal");
+		TreeNode root07 = buildTreeNode07();
+		List<List<Integer>> rlist07 = sol.zigzagLevelOrder(root07);
+		Utility.printListList(rlist07);
+		
+		// Symmetric Tree
+		System.out.println("Symmetric Tree");
+		root = Utility.buildTreeNode(new String[] {"4", "-57", "-57", "#", "67", "67", "#", "#", "-97", "-97"});
+		System.out.println(sol.isSymmetric(root));
+		
+		// Same Tree
+		System.out.println("Same Tree");
+		String[] treeArray = new String[] {"4", "-57", "-57", "#", "67", "67", "#", "#", "-97", "-97"};
+		TreeNode p = Utility.buildTreeNode(treeArray);
+		TreeNode q = Utility.buildTreeNode(treeArray);
+		System.out.println(sol.isSameTree(p, q));
+		
+		// Binary Tree Inorder Traversal
+		System.out.println("Binary Tree Inorder Traversal");
+		root = Utility.buildTreeNode(new String[] {"3", "2", "#", "#", "4", "1"});
+		//Utility.printTreeNode(root);
+		List<Integer> ilist = sol.inorderTraversal(root);
+		Utility.printList(ilist);
+	}
+	
+	public static TreeNode buildTreeNode08() {
+		
+		/*
+		TreeNode root = new TreeNode(1);
+		root.left = new TreeNode(2);
+		root.left.left = new TreeNode(3);
+		root.left.right = new TreeNode(4);
+		
+		root.right = new TreeNode(2);
+		root.right.left = new TreeNode(4);
+		root.right.right = new TreeNode(3);
+		*/
+		TreeNode root = new TreeNode(4);
+		root.left = new TreeNode(-57);
+		root.left.right = new TreeNode(67);
+		root.left.right.right = new TreeNode(-97);
+		
+		root.right = new TreeNode(-57);
+		root.right.left = new TreeNode(67);
+		root.right.left.left = new TreeNode(-97);
+		
+		return root;
+	}
+	
+	public static TreeNode buildTreeNode07() {
+		
+		/*
+		TreeNode root = new TreeNode(3);
+		root.left = new TreeNode(9);
+		
+		root.right = new TreeNode(20);
+		root.right.left = new TreeNode(15);
+		root.right.right = new TreeNode(7);
+		*/
+		
+		/*
+		TreeNode root = new TreeNode(1);
+		root.left = new TreeNode(2);
+		
+		root.right = new TreeNode(3);
+		root.right.left = new TreeNode(4);
+		root.right.left.right = new TreeNode(5);*/
+		
+		TreeNode root = new TreeNode(1);
+		root.left = new TreeNode(2);
+		root.left.left = new TreeNode(4);
+		root.left.right = new TreeNode(5);
+		root.left.left.left = new TreeNode(8);
+		root.left.left.right = new TreeNode(9);
+		root.left.right.left = new TreeNode(10);
+		root.left.right.right = new TreeNode(11);
+		
+		root.right = new TreeNode(3);
+		root.right.left = new TreeNode(6);
+		root.right.right = new TreeNode(7);
+		root.right.left.left = new TreeNode(12);
+		root.right.left.right = new TreeNode(13);
+		root.right.right.left = new TreeNode(14);
+		root.right.right.right = new TreeNode(15);
+		
+		return root;
+	}
+
+	public static TreeNode buildTreeNode06() {
+		
+		/*
+		TreeNode root = new TreeNode(3);
+		root.left = new TreeNode(9);
+		
+		root.right = new TreeNode(20);
+		root.right.left = new TreeNode(15);
+		root.right.right = new TreeNode(7);*/
+		
+		TreeNode root = new TreeNode(1);
+		root.left = new TreeNode(2);
+		
+		root.right = new TreeNode(3);
+		root.right.left = new TreeNode(4);
+		root.right.left.right = new TreeNode(5);
+		
+		return root;
 	}
 	
 	public static TreeNode buildTreeNode02() {
