@@ -255,10 +255,22 @@ public class MyMain {
 		
 		// Binary Tree Inorder Traversal
 		System.out.println("Binary Tree Inorder Traversal");
-		root = Utility.buildTreeNode(new String[] {"3", "2", "#", "#", "4", "1"});
+		//root = Utility.buildTreeNode(new String[] {"3", "2", "#", "#", "4", "1"});
+		root = Utility.buildTreeNode(new String[] {"1", "#", "2", "3"});
 		//Utility.printTreeNode(root);
 		List<Integer> ilist = sol.inorderTraversal(root);
 		Utility.printList(ilist);
+		
+		//Reverse Linked List II
+		System.out.println("Reverse Linked List II");
+		int[] values = new int[] {1, 2};
+		ListNode lhead = Utility.buildListNode(values);
+		ListNode result = sol.reverseBetween(lhead, 1, 2);
+		Utility.pirntListNode(result);
+		
+		// Gray Code
+		System.out.println("Gray Code");
+		Utility.printList(sol.grayCode(3));
 	}
 	
 	public static TreeNode buildTreeNode08() {

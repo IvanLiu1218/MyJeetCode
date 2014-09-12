@@ -1947,7 +1947,7 @@ public class Solution {
      * return [1,3,2].
      * Note: Recursive solution is trivial, could you do it iteratively?
      * 
-     * 
+     * ACCEPTED
 	 */
 	public List<Integer> inorderTraversal(TreeNode root) {
         
@@ -1955,66 +1955,124 @@ public class Solution {
 		if (root == null) return rList;
 		
 		Deque<TreeNode> stack = new ArrayDeque<TreeNode>();
-		stack.push(root);
-		
-		while (stack.size() != 0) {
+		TreeNode node = root;
+		while (node != null || stack.size() != 0) {
 			
-			TreeNode node = stack.getFirst();
-			while (node.left != null) {
+			while (node != null) {
 				
-				stack.push(node.left);
-				node = stack.getFirst();
+				stack.push(node);
+				node = node.left;
 			}
-			
 			node = stack.remove();
-			while (stack.size() >= 0) {
-				
-				rList.add(node.val);
-				if (node.right != null) {
-					
-					stack.push(node.right);
-					break;
-				}
-				if (stack.size() != 0) {
-					
-					node = stack.remove();
-				}
-				else {
-					
-					break;
-				}
-			}
-			
-			/*
-			while (stack.size() != 0) {
-				
-				rList.add(node.val);
-				if (node.right != null) {
-					
-					stack.push(node.right);
-				}
-				node = stack.remove();
-			}
 			rList.add(node.val);
-			if (node.right != null) {
-				
-				stack.push(node.right);
-			}*/
+			node = node.right;
 		}
 		
 		return rList;
     }
 	
+	/*
+	 * Reverse Linked List II 
+	 * 
+	 * Reverse a linked list from position m to n. Do it in-place and in one-pass.
+	 * For example:
+	 * Given 1->2->3->4->5->NULL, m = 2 and n = 4,
+	 * return 1->4->3->2->5->NULL.
+	 * Note:
+	 * Given m, n satisfy the following condition:
+	 * 1 ¡Ü m ¡Ü n ¡Ü length of list.
+	 * 
+	 * ACCEPTED
+	 * 
+	 */
+	public ListNode reverseBetween(ListNode head, int m, int n) {
+        
+		ListNode thead = new ListNode(-1);
+		thead.next = head;
+		
+		ListNode curr = head;
+		ListNode prev = thead;
+		
+		int pos = 1;
+		while (pos < m) {
+			
+			pos++;
+			prev = curr;
+			curr = curr.next;
+		}
+			
+			
+		ListNode h = curr;
+		ListNode t = h;
+		while (m <= pos && pos < n) {
+			
+			ListNode temp = h;
+			h = t.next;
+			t.next = h.next;
+			h.next = temp;
+			pos++;
+		}
+		
+		prev.next = h;
+
+		return thead.next;
+    }
 	
+	/* Gray Code
+     *
+     * The gray code is a binary numeral system where two successive values differ in only one bit.
+     * Given a non-negative integer n representing the total number of bits in the code, print the sequence of gray code. A gray code sequence must begin with 0.
+     * For example, given n = 2, return [0,1,3,2]. Its gray code sequence is:
+		00 - 0
+		01 - 1
+		11 - 3
+		10 - 2
+     * Note:
+     * For a given n, a gray code sequence is not uniquely defined.
+     * For example, [0,2,3,1] is also a valid gray code sequence according to the above definition.
+     * For now, the judge is able to judge based on one instance of gray code sequence. Sorry about that.
+     * 
+     * ACCEPTED
+     */	
+	public List<Integer> grayCode(int n) {
+        
+		List<Integer> gcList = new ArrayList<Integer>();
+		gcList.add(0);
+		
+		int times = getFactorPower(2, n) - 1;
+		int number = 0;
+		for (int i = 0; i < times; ++i) {
+			
+			int factor = 1;
+			int temp = number ^ factor;
+			while (gcList.contains(temp)) {
+				
+				factor <<= 1;
+				temp = number ^ factor;
+				
+			}
+			gcList.add(temp);
+			number = temp;
+		}
+		
+		return gcList;
+    }
 	
+	private int getFactorPower(int factor, int power) {
+		
+		int result = 1;
+		for (int i = 0; i < power; ++i) {
+			
+			result *= factor;
+		}
+		
+		return result;
+	}
 	
-	
-	
-	
-	
-	
-	
-	
+	/*
+	 * 
+	 * 
+	 */
 	
 	
 	

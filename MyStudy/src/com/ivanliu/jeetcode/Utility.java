@@ -4,10 +4,12 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
 
+import com.ivanliu.jeetcode.Solution.ListNode;
 import com.ivanliu.jeetcode.Solution.TreeNode;
 
 public class Utility {
 
+	// TreeNode
 	public static TreeNode buildTreeNode(String[] array) {
 		
 		if (array == null || array.length == 0) {
@@ -66,6 +68,34 @@ public class Utility {
 		}
 	}
 	
+	// ListNode
+	public static ListNode buildListNode(int[] values) {
+		
+		if (values == null || values.length == 0) return null;
+		
+		ListNode thead = new ListNode(-1);
+		ListNode p = thead;
+		for (int i = 0; i < values.length; ++i) {
+			
+			p.next = new ListNode(values[i]);
+			p = p.next;
+		}
+		
+		return thead.next;
+	}
+	
+	public static void pirntListNode(ListNode head) {
+		
+		ListNode node = head;
+		while (node != null) {
+			
+			System.out.print(node.val + " ");
+			node = node.next;
+		}
+		System.out.println();
+	}
+	
+	// Common
 	public static <T> void printList(List<T> list) {
 		
 		for (int i = 0; i < list.size(); ++i) {
