@@ -5,6 +5,7 @@ import java.util.Deque;
 import java.util.List;
 
 import com.ivanliu.jeetcode.Solution.ListNode;
+import com.ivanliu.jeetcode.Solution.TreeLinkNode;
 import com.ivanliu.jeetcode.Solution.TreeNode;
 
 public class Utility {
@@ -68,6 +69,17 @@ public class Utility {
 		}
 	}
 	
+	public static void printTreeNodeRight(TreeNode root) {
+		
+		TreeNode node = root;
+		while (node != null) {
+			
+			System.out.print(node.val + " ");
+			node = node.right;
+		}
+		System.out.println();
+	}
+	
 	// ListNode
 	public static ListNode buildListNode(int[] values) {
 		
@@ -84,7 +96,7 @@ public class Utility {
 		return thead.next;
 	}
 	
-	public static void pirntListNode(ListNode head) {
+	public static void printListNode(ListNode head) {
 		
 		ListNode node = head;
 		while (node != null) {
@@ -117,4 +129,37 @@ public class Utility {
 			System.out.println();
 		}
 	}
+	
+	public static void printTreeLinkNodeNext(TreeLinkNode root) {
+		
+		TreeLinkNode node = root;
+		while (node != null) {
+			
+			TreeLinkNode p = node;
+			while (p != null) {
+				
+				System.out.print(p.val + " ");
+				p = p.next;
+			}
+			System.out.println();
+			
+			if (node.left != null) node = node.left;
+			else node = node.right;
+		}
+	}
+	
+	public static void printArray(int[] array, int length) {
+		
+		for (int i = 0; i < length; ++i) {
+			
+			System.out.print(array[i] + " ");
+		}
+		System.out.println();
+	}
+	
+	public static void printArray(int[] array) {
+		
+		printArray(array, array.length);
+	}
+
 }

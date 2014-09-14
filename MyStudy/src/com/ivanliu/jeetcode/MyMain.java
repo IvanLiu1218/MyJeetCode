@@ -62,13 +62,15 @@ public class MyMain {
 		//printListNode(list2);
 		//ListNode head = sol.mergeListNode(list1, list2);
 		ListNode list = buildListNode(new int[] {10,3,7,21,4,7,3,4,0});
-		Solution.printListNode(list);
+		//Solution.printListNode(list);
+		Utility.printListNode(list);
 		ListNode head = sol.sortList(list);
-		Solution.printListNode(head);
+		Utility.printListNode(head);
 		
 		list = buildListNode(new int[] {10,3,7,21,4,7,3,4,0});
 		head = sol.insertionSortList(list);
-		Solution.printListNode(head);
+		//Solution.printListNode(head);
+		Utility.printListNode(head);
 		
 		ListNode n0 = new ListNode(3);
 		ListNode n1 = new ListNode(2);
@@ -103,7 +105,8 @@ public class MyMain {
 		
 		ListNode list2 = buildListNode(new int[]{1,2,3,4});
 		sol.reorderList(list2);
-		Solution.printListNode(list2);
+		//Solution.printListNode(list2);
+		Utility.printListNode(list2);
 		
 		int[] gas = new int[] {2,4};
 		int[] cost = new int[] {3,4};
@@ -174,7 +177,8 @@ public class MyMain {
 		
 		// Pascal's Triangle II
 		System.out.println("Pascal's Triangle II");
-		sol.printListIntegerI(sol.getRow(0));
+		Utility.printList(sol.getRow(0));
+		//sol.printListIntegerI(sol.getRow(0));
 		
 		// Path Sum
 		System.out.println("Path Sum");
@@ -191,19 +195,19 @@ public class MyMain {
 		System.out.println("Populating Next Right Pointers in Each Node");
 		TreeLinkNode treeLink = buildTreeLinkI();
 		sol.connectI(treeLink);
-		sol.printTreeLinkNode(treeLink);
+		Utility.printTreeLinkNodeNext(treeLink);
 		
 		// Populating Next Right Pointers in Each Node II
 		System.out.println("Populating Next Right Pointers in Each Node II");
 		treeLink = buildTreeLinkII();
 		sol.connect(treeLink);
-		sol.printTreeLinkNode(treeLink);
+		Utility.printTreeLinkNodeNext(treeLink);
 		
 		// Flatten Binary Tree to Linked List
 		System.out.println("Flatten Binary Tree to Linked List");
 		TreeNode root01 = buildTreeNode01();
 		sol.flatten(root01);
-		sol.printTreeNodeRight(root01);
+		Utility.printTreeNodeRight(root01);
 		
 		// Minimum Depth of Binary Tree
 		System.out.println("Minimum Depth of Binary Tree");
@@ -220,20 +224,20 @@ public class MyMain {
 		int[] preorder = new int[]{1, 2, 4, 5, 3, 6, 7};
 		int[] inorder  = new int[]{4, 2, 5, 1, 6, 3, 7};
 		TreeNode root04 = sol.buildTreeI(preorder, inorder);
-		sol.printTreeNode(root04);
+		Utility.printTreeNode(root04);
 		
 		// Construct Binary Tree from Inorder and Postorder Traversal 
 		System.out.println("Construct Binary Tree from Inorder and Postorder Traversal");
 		int[] postorder = new int[]{4, 5, 2, 6, 7, 3, 1};
 		inorder  = new int[]{4, 2, 5, 1, 6, 3, 7};
 		TreeNode root05 = sol.buildTree(inorder, postorder);
-		sol.printTreeNode(root05);
+		Utility.printTreeNode(root05);
 		
 		// Binary Tree Level Order Traversal
 		System.out.println("Binary Tree Level Order Traversal");
 		TreeNode root06 = buildTreeNode06();
 		List<List<Integer>> rlist06 = sol.levelOrder(root06);
-		sol.printListIntegerII(rlist06);
+		Utility.printListList(rlist06);
 		
 		// Binary Tree Zigzag Level Order Traversal
 		System.out.println("Binary Tree Zigzag Level Order Traversal");
@@ -266,11 +270,67 @@ public class MyMain {
 		int[] values = new int[] {1, 2};
 		ListNode lhead = Utility.buildListNode(values);
 		ListNode result = sol.reverseBetween(lhead, 1, 2);
-		Utility.pirntListNode(result);
+		Utility.printListNode(result);
 		
 		// Gray Code
 		System.out.println("Gray Code");
 		Utility.printList(sol.grayCode(3));
+		
+		// Merge Sorted Array
+		System.out.println("Merge Sorted Array");
+		int[] A = new int[]{2,6,9,10,12,0,0,0,0};
+		int[] B = new int[]{1,4,5,11};
+		sol.merge(A, 5, B, 4);
+		Utility.printArray(A);
+		
+		// Remove Duplicates from Sorted List 
+		System.out.println("emove Duplicates from Sorted List");
+		head = Utility.buildListNode(new int[]{1,1,2,2,2,2,3,7,7});
+		list = sol.deleteDuplicatesI(head);
+		Utility.printListNode(list);
+		
+		// Remove Duplicates from Sorted List II
+		System.out.println("Remove Duplicates from Sorted List II");
+		//head = Utility.buildListNode(new int[]{0,1,1,1,2,2,2,3,4,4,4,4,5});
+		head = Utility.buildListNode(new int[]{});
+		list = sol.deleteDuplicates(head);
+		Utility.printListNode(list);
+		
+		// Search in Rotated Sorted Array
+		System.out.println("Search in Rotated Sorted Array");
+		int[] input = new int[]{4,5,6,7,0,1,2,3};
+		System.out.println(sol.searchI(input, 0));
+		
+		// Search in Rotated Sorted Array II
+		System.out.println("Search in Rotated Sorted Array");
+		input = new int[]{4,5,6,7,7,0,0,1,2,3};
+		System.out.println(sol.search(input, 9));
+		
+		// Remove Duplicates from Sorted Array
+		System.out.println("Remove Duplicates from Sorted Array");
+		//input = new int[]{1,2,3,3,3,4,5,6};
+		//input = new int[]{1};
+		//input = new int[]{};
+		//input = new int[]{1,2,3,3,3,4,5,6,6,6,6};
+		//input = new int[]{1,1,2,2};
+		input = new int[]{1,2,2,2,2,3,3};
+		int length = sol.removeDuplicatesI(input);
+		System.out.println(length);
+		Utility.printArray(input, length);
+		
+		// Remove Duplicates from Sorted Array II
+		System.out.println("Remove Duplicates from Sorted Array II");
+		//input = new int[]{1,2,2,2,3,4,4,4,4,4,4};
+		//input = new int[]{};
+		input = new int[]{1};
+		length = sol.removeDuplicates(input);
+		System.out.println(length);
+		Utility.printArray(input, length);
+		
+		// Combinations
+		System.out.println("Combinations");
+		List<List<Integer>> reslist = sol.combine(10, 7);
+		Utility.printListList(reslist);
 	}
 	
 	public static TreeNode buildTreeNode08() {
