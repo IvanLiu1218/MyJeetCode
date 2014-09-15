@@ -331,6 +331,29 @@ public class MyMain {
 		System.out.println("Combinations");
 		List<List<Integer>> reslist = sol.combine(10, 7);
 		Utility.printListList(reslist);
+		
+		// Sort Colors
+		System.out.println("Sort Colors");
+		int[] iArray = new int[]{2,1,1,1,0,0,2,0,0};
+		sol.sortColors(iArray);
+		Utility.printArray(iArray);
+		
+		// Search a 2D Matrix
+		System.out.println("Search a 2D Matrix");
+		//int[][] iiArray = new int[][]{{1,3,5,7},{10,11,16,20},{23,30,34,50}};
+		//int[][] iiArray = new int[][]{{1,3,5,7}};
+		//int[][] iiArray = new int[][]{{1},{3},{5},{7}};
+		int[][] iiArray = null;
+		System.out.println(sol.searchMatrix(iiArray, 1));
+		
+		// Set Matrix Zeroes
+		System.out.println("Set Matrix Zeroes");
+		//int[][] matrix = {{2,3,4,2},{3,2,3,2},{1,3,1,3},{3,4,5,0}};
+		//int[][] matrix = {{0,0,0,5},{4,3,1,4},{0,1,1,4},{1,2,1,3},{0,0,1,1}};
+		int[][] matrix = {{1,1,1,5},{4,3,1,4},{0,1,1,4},{1,2,1,3},{0,0,1,1}};
+		Utility.printMatirx(matrix);
+		sol.setZeroes(matrix);
+		Utility.printMatirx(matrix);
 	}
 	
 	public static TreeNode buildTreeNode08() {

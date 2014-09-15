@@ -2404,6 +2404,184 @@ public class Solution {
 		}
 	}
 	
+	/*
+	 * Sort Colors
+	 * 
+	 * Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.
+	 * Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
+	 * Note:
+	 * You are not suppose to use the library's sort function for this problem.
+	 * 
+	 * click to show follow up.
+	 * 
+	 * Follow up:
+	 * A rather straight forward solution is a two-pass algorithm using counting sort.
+	 * First, iterate the array counting number of 0's, 1's, and 2's, then overwrite array with total number of 0's, then 1's and followed by 2's.
+	 * Could you come up with an one-pass algorithm using only constant space?
+	 * 
+	 * ACCEPTED
+	 */
+	public void sortColors(int[] A) {
+        
+		if (A == null || A.length == 0) return;
+		
+		int i = 0;
+		for (int k = 0; k < 2; ++k) {
+			
+			int j = A.length - 1;
+			while (i < j && i < A.length) {
+				
+				while (i < A.length && A[i] == k) i++;
+				while (0 <= j && A[j] != k) j--;
+				
+				if (i < j) {
+						
+					int temp = A[i];
+					A[i] = A[j];
+					A[j] = temp;
+					
+					i++;
+				}
+			}
+		}
+    }
+	
+	/*
+	 * Search a 2D Matrix
+	 * 
+	 * Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
+	 * Integers in each row are sorted from left to right.
+	 * The first integer of each row is greater than the last integer of the previous row.
+	 * For example,
+	 * 
+	 * Consider the following matrix:
+		[
+		  [1,   3,  5,  7],
+		  [10, 11, 16, 20],
+		  [23, 30, 34, 50]
+		]
+	 * Given target = 3, return true.
+	 * 
+	 * ACCEPTED
+	 */
+	public boolean searchMatrix(int[][] matrix, int target) {
+        
+		if (matrix == null || matrix.length == 0) return false;
+		
+		int i = 0;
+		while (i < matrix.length && matrix[i][0] <= target) {
+			
+			i++;
+		}
+		
+		// matrix[i][0] > target
+		if (i > 0) i--;
+		
+		int j = 0;
+		while (j < matrix[i].length && matrix[i][j] <= target) {
+			
+			j++;
+		}
+		// matrix[i][j] > target
+		if (j > 0) j--;
+		
+		if (matrix[i][j] == target) return true;
+		
+		return false;
+    }
+	
+	/*
+	 * Set Matrix Zeroes
+	 * 
+	 * Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in place.
+	 * 
+	 * click to show follow up.
+	 * 
+	 * Follow up:
+	 * Did you use extra space?
+	 * A straight forward solution using O(mn) space is probably a bad idea.
+	 * A simple improvement uses O(m + n) space, but still not the best solution.
+	 * Could you devise a constant space solution?
+	 * 
+	 * Wrong Answer
+	 * Input:	 [[0,0,0,5],[4,3,1,4],[0,1,1,4],[1,2,1,3],[0,0,1,1]]
+	 * Output:	 [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+	 * Expected:[[0,0,0,0],[0,0,0,4],[0,0,0,0],[0,0,0,3],[0,0,0,0]]
+     * 
+     * ACCEPTED
+	 */
+	public void setZeroes(int[][] matrix) {
+        
+		boolean isFirstRow = false;
+		boolean isFirstColumn = false;
+		
+		for (int j = 0; j < matrix[0].length; ++j) {
+			
+			if (matrix[0][j] == 0) {
+				
+				isFirstRow = true;
+			}
+		}
+		
+		for (int i = 0; i < matrix.length; ++i) {
+			
+			if (matrix[i][0] == 0) {
+				isFirstColumn = true;
+			}
+		}
+		
+		for (int i = 1; i < matrix.length; ++i) {
+			
+			for (int j = 1; j < matrix[i].length; ++j) {
+				
+				if (matrix[i][j] == 0) {
+					
+					matrix[i][0] = 0;
+					matrix[0][j] = 0;
+				}
+			}
+		}
+		
+		// check row
+		for (int i = 1; i < matrix.length; ++i) {
+			
+			if (matrix[i][0] == 0) {
+				
+				for (int j = 1; j < matrix[i].length; ++j) {
+					
+					matrix[i][j] = 0;
+				}
+			}
+		}
+		
+		// check column
+		for (int j = 1; j < matrix[0].length; ++j) {
+			
+			if (matrix[0][j] == 0) {
+				
+				for (int i = 1; i < matrix.length; ++i) {
+					
+					matrix[i][j] = 0;
+				}
+			}
+		}
+		
+		if (isFirstRow) {
+			
+			for (int j = 0; j < matrix[0].length; ++j) {
+				
+				matrix[0][j] = 0;
+			}
+		}
+		if (isFirstColumn) {
+			
+			for (int i = 0; i < matrix.length; ++i) {
+				
+				matrix[i][0] = 0;
+			}
+		}
+    }
+	
 	
 	/*
 	 * Balanced Binary Tree
