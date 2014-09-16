@@ -354,6 +354,29 @@ public class MyMain {
 		Utility.printMatirx(matrix);
 		sol.setZeroes(matrix);
 		Utility.printMatirx(matrix);
+		
+		// Climbing Stairs
+		System.out.println("Climbing Stairs");
+		int n = 44;
+		//System.out.println(sol.climbStairsSlow(n));
+		System.out.println(sol.climbStairs(n));
+		n = 45;
+		System.out.println(sol.climbStairs(n));
+		n = 46;
+		System.out.println(sol.climbStairs(n));
+		
+		// Plus One
+		System.out.println("Plus One");
+		int[] digits = new int[]{9,9,9,9,9};
+		Utility.printArray(sol.plusOne(digits));
+		
+		// Merge Two Sorted Lists
+		System.out.println("Merge Two Sorted Lists");
+		ListNode l1 = Utility.buildListNode(new int[]{3,5,7,8,12,15,60});
+		//ListNode l2 = Utility.buildListNode(new int[]{1,4,9,12,61});
+		ListNode l2 = null;
+		ListNode l = sol.mergeTwoLists(l1, l2);
+		Utility.printListNode(l);
 	}
 	
 	public static TreeNode buildTreeNode08() {

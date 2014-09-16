@@ -150,6 +150,7 @@ public class Utility {
 	
 	public static void printArray(int[] array, int length) {
 		
+		if (array == null) return;
 		for (int i = 0; i < length; ++i) {
 			
 			System.out.print(array[i] + " ");
@@ -159,6 +160,7 @@ public class Utility {
 	
 	public static void printArray(int[] array) {
 		
+		if (array == null) return;
 		printArray(array, array.length);
 	}
 	
