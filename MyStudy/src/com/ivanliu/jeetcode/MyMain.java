@@ -377,6 +377,16 @@ public class MyMain {
 		ListNode l2 = null;
 		ListNode l = sol.mergeTwoLists(l1, l2);
 		Utility.printListNode(l);
+		
+		// Single Number
+		System.out.println("Single Number");
+		iArray = new int[]{4,3,1,2,3,1,2};
+		System.out.println(sol.singleNumberI(iArray));
+		
+		// Single Number II
+		System.out.println("Single Number II");
+		iArray = new int[]{2,3,4,4,3,1,2,3,2,4};
+		System.out.println(sol.singleNumber(iArray));
 	}
 	
 	public static TreeNode buildTreeNode08() {

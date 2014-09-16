@@ -2799,9 +2799,70 @@ public class Solution {
 		return thead.next;
     }
 	
+	/*
+	 * Single Number
+	 * 
+	 * Given an array of integers, every element appears twice except for one. Find that single one.
+	 * Note:
+	 * Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+	 * 
+	 * ACCEPTED
+	 */
+	public int singleNumberI(int[] A) {
+        
+		for (int i = 1; i < A.length; ++i) {
+			
+			A[0] = A[0] ^ A[i];
+		}
+		
+		return A[0];
+    }
 	
-	
-	
+	/*
+	 * Single Number II 
+	 * 
+	 * Given an array of integers, every element appears three times except for one. Find that single one.
+	 * Note:
+	 * Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+	 */
+	public int singleNumber(int[] A) {
+        
+		if (A == null) return -1;
+		if (A.length == 1) return A[0];
+		
+		//int temp = A[0];
+		//A[0] = (A[0] ^ A[1]) & ~A[0];
+		//A[1] = (temp ^ A[1]) & ~A[0];
+		
+		int ones = 0;
+		int twos = 0;
+		// i = 0;
+		//ones = A[0];
+		//twos = (0 ^ A[0]) & ~A[0];
+		// i = 1;
+		ones = (A[0] ^ A[1]) & ~((0 ^ A[0]) & ~A[0]);
+		twos = (((0 ^ A[0]) & ~A[0]) ^ A[1]) & ~ones;
+
+		for (int i = 2; i < A.length; ++i) {
+			
+			ones = (ones ^ A[i]) & ~twos;
+			twos = (twos ^ A[i]) & ~ones;
+		}
+		
+		return ones;
+		
+		/*
+		 * answer with extra space
+		 */
+		/*
+		int ones = 0, twos = 0;
+	    for(int i = 0; i < A.length; i++){
+	        ones = (ones ^ A[i]) & ~twos;
+	        twos = (twos ^ A[i]) & ~ones;
+	    }
+	    return ones;
+	    */
+    }
 	
 	
 	
