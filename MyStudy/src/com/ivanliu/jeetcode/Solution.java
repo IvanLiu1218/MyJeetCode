@@ -547,8 +547,8 @@ public class Solution {
 	/*
 	 * Reorder List
 	 * 
-	 * Given a singly linked list L: L0¡úL1¡ú¡­¡úLn-1¡úLn,
-	 * reorder it to: L0¡úLn¡úL1¡úLn-1¡úL2¡úLn-2¡ú¡­
+	 * Given a singly linked list L: L0â†’L1â†’â€¦â†’Ln-1â†’Ln,
+	 * reorder it to: L0â†’Lnâ†’L1â†’Ln-1â†’L2â†’Ln-2â†’â€¦
 	 * You must do this in-place without altering the nodes' values.
 	 * For example,
 	 * Given {1,2,3,4}, reorder it to {1,4,2,3}.
@@ -961,7 +961,7 @@ public class Solution {
 	 * 
 	 * ACCEPTED
 	 */
-	/* ³¬Ê±£º
+	/* è¶…æ—¶ï¼š
 	private int minValue = 0;
 	public int minimumTotal(List<List<Integer>> triangle) {
         
@@ -1888,7 +1888,7 @@ public class Solution {
 	 * return 1->4->3->2->5->NULL.
 	 * Note:
 	 * Given m, n satisfy the following condition:
-	 * 1 ¡Ü m ¡Ü n ¡Ü length of list.
+	 * 1 â‰¤ m â‰¤ n â‰¤ length of list.
 	 * 
 	 * ACCEPTED
 	 * 
@@ -2863,6 +2863,292 @@ public class Solution {
 	    return ones;
 	    */
     }
+	
+	/*
+	 * Minimum Path Sum
+	 * 
+	 * Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right 
+	 * which minimizes the sum of all numbers along its path.
+	 * Note: You can only move either down or right at any point in time.
+	 * 
+	 * Time Limit Exceeded
+	 * Last executed input:	[[7,1,3,5,8,9,9,2,1,9,0,8,3,1,6,6,9,5],
+	 *                       [9,5,9,4,0,4,8,8,9,5,7,3,6,6,6,9,1,6],
+	 *                       [8,2,9,1,3,1,9,7,2,5,3,1,2,4,8,2,8,8],
+	 *                       [6,7,9,8,4,8,3,0,4,0,9,6,6,0,0,5,1,4],
+	 *                       [7,1,3,1,8,8,3,1,2,1,5,0,2,1,9,1,1,4],
+	 *                       [9,5,4,3,5,6,1,3,6,4,9,7,0,8,0,3,9,9],
+	 *                       [1,4,2,5,8,7,7,0,0,7,1,2,1,2,7,7,7,4],
+	 *                       [3,9,7,9,5,8,9,5,6,9,8,8,0,1,4,2,8,2],
+	 *                       [1,5,2,2,2,5,6,3,9,3,1,7,9,6,8,6,8,3],
+	 *                       [5,7,8,3,8,8,3,9,9,8,1,9,2,5,4,7,7,7],
+	 *                       [2,3,2,4,8,5,1,7,2,9,5,2,4,2,9,2,8,7],
+	 *                       [0,1,6,1,1,0,0,6,5,4,3,4,3,7,9,6,1,9]]
+	 * 
+	 * ACCEPTED
+	 */
+	/* Time Limit Exceeded
+	private int minPathSum = Integer.MAX_VALUE;
+	public int minPathSum(int[][] grid) {
+        
+		if (grid == null || grid.length == 0) return -1;
+		
+		int sum = 0;
+		searchMetrix(grid, 0, 0, sum);
+		 
+		return minPathSum;
+    }
+	
+	private void searchMetrix(int[][] grid, int i, int j, int sum) {
+		
+		if (i == grid.length - 1 && j == grid[0].length - 1) {
+			
+			sum += grid[i][j];
+			if (sum < minPathSum) {
+				
+				minPathSum = sum;
+			}
+			return;
+		}
+		sum += grid[i][j];
+		if (i + 1 < grid.length) {
+			
+			searchMetrix(grid, i + 1, j, sum);
+		}
+		if (j + 1 < grid[0].length) {
+			
+			searchMetrix(grid, i, j + 1, sum);
+		}
+	}*/
+	public int minPathSum(int[][] grid) {
+	
+		if (grid == null || grid.length == 0 || grid[0].length == 0) return -1;
+		
+		for (int i = grid.length - 1; i >= 0; --i) {
+			
+			for (int j = grid[0].length - 1; j >= 0; --j) {
+				
+				grid[i][j] += getMinDist(grid, i, j);
+			}
+		}
+		
+		return grid[0][0];
+	}
+	private int getMinDist(int[][] grid, int i, int j) {
+		
+		if (i == grid.length - 1 && j == grid[0].length - 1) {
+			
+			return 0;
+		}
+		
+		int right = Integer.MAX_VALUE;
+		int down = Integer.MAX_VALUE;
+		
+		if (i + 1 < grid.length) {
+			
+			down = grid[i + 1][j];
+			
+		}
+		if (j + 1 < grid[0].length) {
+			
+			right = grid[i][j + 1];
+		}
+		return Math.min(right, down);
+	}
+	
+	/*
+	 * Unique Paths
+	 * 
+	 * A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+	 * The robot can only move either down or right at any point in time. The robot is trying to reach 
+	 * the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+	 * How many possible unique paths are there?
+	 * 
+	 * Note: m and n will be at most 100.
+	 * 
+	 * Time Limit Exceeded
+	 * Last executed input:	23, 12
+	 * 
+	 * ACCEPTED
+	 */
+	/*
+	 * Time Limit Exceeded
+	private int uniquePaths = 0;
+	public int uniquePaths(int m, int n) {
+		
+		if (m <= 0 || n <= 0) return -1;
+        
+		uniquePaths = 0;
+		searchMetrix(0, 0, m, n);
+		return uniquePaths;
+    }
+	
+	private void searchMetrix(int i, int j,  int m, int n) {
+		
+		if (i >= m || j >= n) return;
+		
+		if (i == m - 1 && j == n - 1) {
+			
+			uniquePaths++;
+			return;
+		}
+		
+		searchMetrix(i + 1, j, m, n);
+		searchMetrix(i, j + 1, m, n);
+	}
+	*/
+	/* 5x3
+	 * | 1 | 1 | 1 |
+	 * | 1 | 2 | 3 | ==> 3 = 1 + 2
+	 * | 1 | 3 | 6 | ==> 6 = 3 + 3
+	 * | 1 | 4 | 10| ==> 10 = 6 + 4 (up + left)
+	 * | 1 | 5 | 15|
+	 */
+	public int uniquePaths(int m, int n) {
+		
+		if (m <= 0 || n <= 0) return -1;
+		
+		int[][] metrix = new int[m][n];
+		
+		for (int i = 0; i < m; ++i) {
+			
+			for (int j = 0; j < n; ++j) {
+				
+				metrix[i][j] = getMetrixValue(metrix, i, j);
+			}
+		}
+		
+		return metrix[m - 1][n - 1];
+	}
+	private int getMetrixValue(int[][] metrix, int i , int j) {
+		
+		if (i == 0 && j == 0) {
+			
+			return 1;
+		}
+		
+		int up = 0;
+		int left = 0;
+		
+		if (i - 1 >= 0) {
+			
+			up = metrix[i - 1][j];
+		}
+		if (j - 1 >= 0) {
+			
+			left = metrix[i][j - 1];
+		}
+		return up + left;
+	}
+	/*
+	 * Spiral Matrix II
+	 * 
+	 * Given an integer n, generate a square matrix filled with elements from 1 to n2 in spiral order.
+	 * For example,
+	 * Given n = 3,
+	 * You should return the following matrix:
+		[
+		 [ 1, 2, 3 ],
+		 [ 8, 9, 4 ],
+		 [ 7, 6, 5 ]
+		]
+     * 
+     * ACCEPTED
+	 */
+	public int[][] generateMatrix(int n) {
+        
+		if (n < 0) return null;
+		int[][] metrix = new int[n][n];
+		
+		int value = 1;
+		
+		int times = 0;
+		int endTimes = (n + 1) / 2;
+		
+		while (times < endTimes) {
+			
+			int i = times;
+			int j = times;
+			
+			while (j < n - times) {
+				
+				metrix[i][j] = value++;
+				++j;
+			}
+			--j;
+			++i;
+			
+			while (i < n - times) {
+				
+				metrix[i][j] = value++;
+				++i;
+			}
+			--i;
+			--j;
+			
+			while (times <= j) {
+				
+				metrix[i][j] = value++;
+				--j;
+			}
+			++j;
+			--i;
+			
+			while (times < i) {
+				
+				metrix[i][j] = value++;
+				--i;
+			}
+			++times;
+		}
+		
+		return metrix;
+    }
+	
+	/*
+	 * Maximum Subarray
+	 * 
+	 * Find the contiguous subarray within an array (containing at least one number) which has the largest sum.
+	 * For example, given the array [âˆ’2,1,âˆ’3,4,âˆ’1,2,1,âˆ’5,4],
+	 * the contiguous subarray [4,âˆ’1,2,1] has the largest sum = 6.
+	 * 
+	 * click to show more practice.
+	 * 
+	 * More practice:
+	 * If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
+	 * 
+	 * divide and conquer --> åˆ†æ²»æ³•
+	 * Time Limit Exceeded
+	 * 
+	 * 
+	*/
+	/*
+	 * Time Limit Exceeded
+	public int maxSubArray(int[] A) {
+        
+		int maxSum = Integer.MIN_VALUE;
+		
+		for (int i = 0; i < A.length - 1; ++i) {
+			
+			int sum = A[i];
+			for (int j = i + 1; j < A.length; ++j) {
+				
+				sum += A[j];
+				if (sum > maxSum) maxSum = sum;
+			}
+		}
+		
+		return maxSum;
+    }
+    */
+	public int maxSubArray(int[] A) {
+        
+		int maxSum = Integer.MIN_VALUE;
+		
+		
+		return maxSum;
+    }
+	
 	
 	
 	

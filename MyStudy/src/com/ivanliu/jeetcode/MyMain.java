@@ -387,6 +387,26 @@ public class MyMain {
 		System.out.println("Single Number II");
 		iArray = new int[]{2,3,4,4,3,1,2,3,2,4};
 		System.out.println(sol.singleNumber(iArray));
+		
+		// Minimum Path Sum
+		System.out.println("Minimum Path Sum");
+		//iiArray = new int[][]{{2,5,7,8},{5,5,6,1},{7,1,7,1},{8,1,1,1}};
+		iiArray = new int[][]{{2,2,2,2},{2,1,1,2},{2,2,2,2},{2,2,2,2}};
+		System.out.println(sol.minPathSum(iiArray));
+		
+		// Unique Paths
+		System.out.println("Unique Paths");
+		System.out.println(sol.uniquePaths(23, 12));
+		
+		// Spiral Matrix II
+		System.out.println("Spiral Matrix II");
+		iiArray = sol.generateMatrix(6);
+		Utility.printMatirx(iiArray);
+		
+		// Maximum Subarray
+		System.out.println("Maximum Subarray");
+		iArray = new int[]{-2,1,-3,4,-1,2,1,-5,4};
+		System.out.println(sol.maxSubArray(iArray));
 	}
 	
 	public static TreeNode buildTreeNode08() {
