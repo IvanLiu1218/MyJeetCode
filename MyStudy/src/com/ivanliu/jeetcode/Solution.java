@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -3104,6 +3105,125 @@ public class Solution {
 		
 		return metrix;
     }
+	
+	/*
+	 * Swap Nodes in Pairs
+	 * 
+	 * Given a linked list, swap every two adjacent nodes and return its head.
+	 * 
+	 * For example,
+	 * Given 1->2->3->4, you should return the list as 2->1->4->3.
+	 * 
+	 * Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.
+	 * 
+	 * ACCEPTED
+	 * 
+	 */
+	public ListNode swapPairs(ListNode head) {
+        
+		ListNode thead = new ListNode(-1);
+		ListNode prev = thead;
+		ListNode node = head;
+		while (node != null && node.next != null) {
+			
+			ListNode next = node.next;
+			
+			node.next = next.next;
+			next.next = node;
+			prev.next = next;
+			
+			prev = node;
+			node = node.next;
+		}
+		if (node != null) {
+			
+			prev.next = node;
+		}
+		
+		return thead.next;
+    }
+	
+	/*
+	 * Permutations
+	 * 
+	 * Given a collection of numbers, return all possible permutations.
+	 * For example,
+	 * [1,2,3] have the following permutations:
+	 * [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], and [3,2,1].
+	 * 
+	 * ACCEPTED
+	 */
+	private List<List<Integer>> llist = null;
+	public List<List<Integer>> permute(int[] num) {
+        
+		llist = new ArrayList<List<Integer>>();
+		if (num == null || num.length == 0) return llist;
+		
+		List<Integer> range = new LinkedList<Integer>();
+		for (int i = 0; i < num.length; ++i) {
+			
+			range.add(num[i]);
+		}
+		List<Integer> list = new ArrayList<Integer>();
+		getPermutation(range, list);
+		
+		return llist;
+    }
+	
+	private void getPermutation(List<Integer> range, List<Integer> list) {
+		
+		if (range.size() == 0) {
+			
+			llist.add(new ArrayList<Integer>(list));
+			return;
+		}
+		
+		for (int i = 0; i < range.size(); ++i) {
+			
+			int val = range.remove(i);
+			list.add(val);
+			
+			getPermutation(range, list);
+			
+			range.add(i, val);
+			list.remove(list.size() - 1);
+		}
+	}
+	
+	/*
+	 * Permutations II
+	 * Given a collection of numbers that might contain duplicates, return all possible unique permutations.
+	 * 
+	 * For example,
+	 * [1,1,2] have the following unique permutations:
+	 * [1,1,2], [1,2,1], and [2,1,1].
+	 * 
+	 * 
+	 */
+	List<List<Integer>> permuteUniqueList = null;
+	public List<List<Integer>> permuteUnique(int[] num) {
+        
+		permuteUniqueList = new ArrayList<List<Integer>>();
+		
+		if (num == null || num.length == 0) return llist;
+		
+		
+		
+		return permuteUniqueList;
+    }
+	
+	private void getPermutationUnique(List<Integer> range, List<Integer> list) {
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/*
 	 * Maximum Subarray

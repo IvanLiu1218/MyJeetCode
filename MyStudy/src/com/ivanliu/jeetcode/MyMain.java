@@ -403,10 +403,27 @@ public class MyMain {
 		iiArray = sol.generateMatrix(6);
 		Utility.printMatirx(iiArray);
 		
+		// Swap Nodes in Pairs
+		System.out.println("Swap Nodes in Pairs");
+		ListNode nodelist = Utility.buildListNode(new int[]{1,2,3,4,5,6,7});
+		Utility.printListNode(nodelist);
+		Utility.printListNode(sol.swapPairs(nodelist));
+		
+		// Permutations
+		System.out.println("Permutations");
+		llist = sol.permute(new int[]{1,2,3,4});
+		Utility.printListList(llist);
+		
+		// Permutations II
+		System.out.println("Permutations II");
+		
+		
 		// Maximum Subarray
-		System.out.println("Maximum Subarray");
-		iArray = new int[]{-2,1,-3,4,-1,2,1,-5,4};
-		System.out.println(sol.maxSubArray(iArray));
+		//System.out.println("Maximum Subarray");
+		//iArray = new int[]{-2,1,-3,4,-1,2,1,-5,4};
+		//System.out.println(sol.maxSubArray(iArray));
+		
+		
 	}
 	
 	public static TreeNode buildTreeNode08() {
