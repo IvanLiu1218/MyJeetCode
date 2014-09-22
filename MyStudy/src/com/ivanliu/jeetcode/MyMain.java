@@ -451,6 +451,9 @@ public class MyMain {
 		String roman = "MMMCMXCIX";
 		System.out.println(sol.romanToInt(roman));
 		
+		// Reverse Integer
+		System.out.println("Reverse Integer");
+		System.out.println(sol.reverse(-100001));  // 1000000003 »áÒç³ö
 		
 		
 		// Generate Parentheses

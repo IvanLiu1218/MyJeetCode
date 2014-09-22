@@ -548,8 +548,8 @@ public class Solution {
 	/*
 	 * Reorder List
 	 * 
-	 * Given a singly linked list L: L0→L1→…→Ln-1→Ln,
-	 * reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
+	 * Given a singly linked list L: L0鈫扡1鈫掆�︹啋Ln-1鈫扡n,
+	 * reorder it to: L0鈫扡n鈫扡1鈫扡n-1鈫扡2鈫扡n-2鈫掆��
 	 * You must do this in-place without altering the nodes' values.
 	 * For example,
 	 * Given {1,2,3,4}, reorder it to {1,4,2,3}.
@@ -962,7 +962,7 @@ public class Solution {
 	 * 
 	 * ACCEPTED
 	 */
-	/* 超时：
+	/* 瓒呮椂锛�
 	private int minValue = 0;
 	public int minimumTotal(List<List<Integer>> triangle) {
         
@@ -1889,7 +1889,7 @@ public class Solution {
 	 * return 1->4->3->2->5->NULL.
 	 * Note:
 	 * Given m, n satisfy the following condition:
-	 * 1 ≤ m ≤ n ≤ length of list.
+	 * 1 鈮� m 鈮� n 鈮� length of list.
 	 * 
 	 * ACCEPTED
 	 * 
@@ -3233,10 +3233,10 @@ public class Solution {
 	 * You may assume no duplicates in the array.
 	 * 
 	 * Here are few examples.
-	 * [1,3,5,6], 5 → 2
-	 * [1,3,5,6], 2 → 1
-	 * [1,3,5,6], 7 → 4
-	 * [1,3,5,6], 0 → 0
+	 * [1,3,5,6], 5 鈫� 2
+	 * [1,3,5,6], 2 鈫� 1
+	 * [1,3,5,6], 7 鈫� 4
+	 * [1,3,5,6], 0 鈫� 0
 	 * 
 	 * ACCEPTED
 	 */
@@ -3361,7 +3361,7 @@ public class Solution {
 		return n1;
 	}*/
 	
-	// 分治法
+	// 鍒嗘不娉�
 	public ListNode mergeKLists(List<ListNode> lists) {
 		
 		if (lists == null || lists.size() == 0) return null;
@@ -3541,6 +3541,55 @@ public class Solution {
 		return result;
     }
 	
+	/*
+	 * Reverse Integer
+	 * 
+	 * Reverse digits of an integer.
+	 * 
+	 * Example1: x = 123, return 321
+	 * Example2: x = -123, return -321
+	 * 
+	 * click to show spoilers.
+	 * 
+	 * Have you thought about this?
+	 * Here are some good questions to ask before coding. Bonus points for you if you have already thought through this!
+	 * If the integer's last digit is 0, what should the output be? ie, cases such as 10, 100.
+	 * Did you notice that the reversed integer might overflow? Assume the input is a 32-bit integer, 
+	 * then the reverse of 1000000003 overflows. How should you handle such cases?
+	 * Throw an exception? Good, but what if throwing an exception is not an option? 
+	 * You would then have to re-design the function (ie, add an extra parameter).
+	 * 
+	 * ACCEPTED
+	 * (暂时无需考虑溢出问题)
+	 */
+	public int reverse(int x) {
+        
+		boolean isNegative = false;
+		int num = x;
+		if (num < 0) {
+			
+			num *= -1;
+			isNegative = true;
+		}
+		int result = 0;
+		
+		while (num > 0) {
+			
+			result *= 10;
+			int left = num % 10;
+			result += left;
+			num = num / 10;
+		}
+		
+		if (isNegative) {
+			
+			result *= -1;
+		}
+		return result;
+    }
+	
+	
+	
 	
 	
 	/*
@@ -3607,15 +3656,15 @@ public class Solution {
 	 * Maximum Subarray
 	 * 
 	 * Find the contiguous subarray within an array (containing at least one number) which has the largest sum.
-	 * For example, given the array [−2,1,−3,4,−1,2,1,−5,4],
-	 * the contiguous subarray [4,−1,2,1] has the largest sum = 6.
+	 * For example, given the array [鈭�2,1,鈭�3,4,鈭�1,2,1,鈭�5,4],
+	 * the contiguous subarray [4,鈭�1,2,1] has the largest sum = 6.
 	 * 
 	 * click to show more practice.
 	 * 
 	 * More practice:
 	 * If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
 	 * 
-	 * divide and conquer --> 分治法
+	 * divide and conquer --> 鍒嗘不娉�
 	 * Time Limit Exceeded
 	 * 
 	 * 
