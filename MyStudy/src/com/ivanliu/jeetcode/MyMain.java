@@ -414,9 +414,52 @@ public class MyMain {
 		llist = sol.permute(new int[]{1,2,3,4});
 		Utility.printListList(llist);
 		
-		// Permutations II
-		System.out.println("Permutations II");
+		// Length of Last Word
+		System.out.println("Length of Last Word");
+		String s = "a ";
+		System.out.println(sol.lengthOfLastWord(s));
 		
+		// Search Insert Position
+		System.out.println("Search Insert Position");
+		iArray = new int[]{1,3,5,6};
+		System.out.println(sol.searchInsert(iArray, 0));
+		
+		// Remove Element 
+		System.out.println("Remove Element ");
+		iArray = new int[]{5,1,2,5,3,4,5};
+		length = sol.removeElement(iArray, 5);
+		Utility.printArray(iArray, length);
+		
+		// Merge k Sorted Lists
+		System.out.println("Merge k Sorted Lists");
+		List<ListNode> nlist = new ArrayList<ListNode>();
+		//nlist.add(Utility.buildListNode(new int[]{1,3,5,7,8}));
+		//nlist.add(Utility.buildListNode(new int[]{2,3,4}));
+		nlist.add(Utility.buildListNode(new int[]{}));
+		//nlist.add(Utility.buildListNode(new int[]{0,9}));
+		nlist.add(Utility.buildListNode(new int[]{}));
+		ListNode nhead = sol.mergeKLists(nlist);
+		Utility.printListNode(nhead);
+		
+		// Integer to Roman
+		System.out.println("Integer to Roman");
+		int num = 3999;
+		System.out.println(sol.intToRoman(num));
+		
+		// Roman to Integer
+		System.out.println("Roman to Integer");
+		String roman = "MMMCMXCIX";
+		System.out.println(sol.romanToInt(roman));
+		
+		
+		
+		// Generate Parentheses
+		//System.out.println("Generate Parentheses");
+		//List<String> strList = sol.generateParenthesis(2);
+		//Utility.printList(strList);
+		
+		// Permutations II
+		//System.out.println("Permutations II");
 		
 		// Maximum Subarray
 		//System.out.println("Maximum Subarray");

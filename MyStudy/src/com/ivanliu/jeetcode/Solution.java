@@ -3191,6 +3191,384 @@ public class Solution {
 	}
 	
 	/*
+	 * Length of Last Word
+	 * 
+	 * Given a string s consists of upper/lower-case alphabets and empty space characters ' ', 
+	 * return the length of last word in the string.
+	 * If the last word does not exist, return 0.
+	 * Note: A word is defined as a character sequence consists of non-space characters only.
+	 * For example, 
+	 * Given s = "Hello World",
+	 * return 5.
+	 * 
+	 * Wrong Answer
+	 * Input:	"a "
+	 * Output:	 0
+	 * Expected: 1
+	 * 
+	 * ACCEPTED
+	 */
+	public int lengthOfLastWord(String s) {
+        
+		if (s == null) return 0;
+		
+		int length = 0;
+		for (int i = s.length() - 1; i >= 0; --i) {
+			
+			if (s.charAt(i) == ' ') {
+				
+				if (length == 0) continue;
+				else return length;
+			}
+			else length++;
+		}
+		return length;
+    }
+	
+	/*
+	 * Search Insert Position
+	 * 
+	 * Given a sorted array and a target value, return the index if the target is found. 
+	 * If not, return the index where it would be if it were inserted in order.
+	 * You may assume no duplicates in the array.
+	 * 
+	 * Here are few examples.
+	 * [1,3,5,6], 5 → 2
+	 * [1,3,5,6], 2 → 1
+	 * [1,3,5,6], 7 → 4
+	 * [1,3,5,6], 0 → 0
+	 * 
+	 * ACCEPTED
+	 */
+	public int searchInsert(int[] A, int target) {
+        
+		int i = 0;
+		for (; i < A.length; ++i) {
+			
+			if (target <= A[i]) {
+				
+				return i;
+			}
+		}
+		if (i >= A.length) {
+			
+			return i;
+		}
+		
+		return -1;
+    }
+	
+	/*
+	 * Remove Element 
+	 * 
+	 * Given an array and a value, remove all instances of that value in place and return the new length.
+	 * The order of elements can be changed. It doesn't matter what you leave beyond the new length.
+	 * 
+	 * ACCEPTED
+	 */
+	public int removeElement(int[] A, int elem) {
+        
+		if (A == null || A.length == 0) return 0;
+		
+		int length = A.length;
+		
+		int i = 0;
+		while (i < length) {
+			
+			if (A[i] == elem) {
+				
+				for (int j = i; j < length - 1; ++j) {
+					
+					A[j] = A[j + 1];
+				}
+				--length;
+			}
+			else {
+				
+				++i;
+			}
+		}
+		
+		return length;
+    }
+	
+	/*
+	 * Merge k Sorted Lists
+	 * 
+	 * Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+	 * 
+	 * Last executed input:	[{},{}]
+	 * 
+	 * Time Limit Exceeded
+	 * 
+	 * Runtime Error
+	 * Runtime Error Message:	Line 46: java.lang.IndexOutOfBoundsException: Index: 1, Size: 1
+	 * Last executed input:	[{},{1}]
+	 * 
+	 * Time Limit Exceeded
+	 * 
+	 * ACCEPTED
+	 */
+	/*
+	 * Time Limit Exceeded
+	public ListNode mergeKLists(List<ListNode> lists) {
+		
+		if (lists == null || lists.size() == 0) return null;
+		
+		ListNode thead = new ListNode(-1);
+		ListNode pnode = thead;
+		
+		while (lists.size() > 1) {
+			
+			int minValue = Integer.MAX_VALUE;
+			int index = -1;
+			
+			for (int i = lists.size() - 1; i >= 0; --i) {
+				
+				ListNode node = lists.get(i);
+				if (node != null && node.val < minValue) {
+					
+					minValue = node.val;
+					index = i;
+				}
+			}
+			if (index == -1) break;
+			
+			ListNode node = lists.remove(index);
+			pnode.next = node;
+			if (node.next != null) {
+				
+				lists.add(index, node.next);
+			}
+			pnode = pnode.next;
+		}
+		if (lists.size() == 1) pnode.next = lists.get(0);
+		
+		return thead.next;
+    }*/
+	
+	/*
+	 *  Time Limit Exceeded
+	public ListNode mergeKLists(List<ListNode> lists) {
+		
+		if (lists == null || lists.size() == 0) return null;
+		ListNode n1 = lists.get(0);
+		
+		for (int i = 1; i < lists.size(); ++i) {
+			
+			n1 = mergeKLists(n1, lists.get(i));
+		}
+		return n1;
+	}*/
+	
+	// 分治法
+	public ListNode mergeKLists(List<ListNode> lists) {
+		
+		if (lists == null || lists.size() == 0) return null;
+		if (lists.size() == 1) return lists.get(0);
+		
+		int mid = (lists.size() - 1) / 2;
+		ListNode n1 = mergeKLists(lists, 0, mid);
+		ListNode n2 = mergeKLists(lists, mid + 1, lists.size() - 1);
+		
+		return mergeKLists(n1, n2);
+	}
+	
+	public ListNode mergeKLists(List<ListNode> lists, int start, int end) {
+		
+		if (start == end) {
+			
+			return lists.get(start);
+		}
+		
+		int mid = (start + end) / 2;
+		
+		ListNode n1 = mergeKLists(lists, start, mid);
+		ListNode n2 = mergeKLists(lists, mid + 1, end);
+		
+		return mergeKLists(n1, n2);
+	}
+
+	public ListNode mergeKLists(ListNode h1, ListNode h2) {
+		
+		ListNode nhead = new ListNode(-1);
+		ListNode pnode = nhead;
+		
+		ListNode n1 = h1;
+		ListNode n2 = h2;
+		while (n1 != null && n2 != null) {
+			
+			if (n1.val < n2.val) {
+				
+				pnode.next = n1;
+				n1 = n1.next;
+				
+			}
+			else {
+				
+				pnode.next = n2;
+				n2 = n2.next;
+			}
+			pnode = pnode.next;
+		}
+		if (n1 != null) {
+			
+			pnode.next = n1;
+		}
+		if (n2 != null) {
+			
+			pnode.next = n2;
+		}
+		
+		return nhead.next;
+	}
+	
+	/*
+	 * Integer to Roman
+	 * Given an integer, convert it to a roman numeral.
+	 * Input is guaranteed to be within the range from 1 to 3999.
+	 * 
+	 * ACCEPTED
+	 */
+	public String intToRoman(int num) {
+		
+		Map<Integer, String> romanMap = new HashMap<Integer, String>();
+		romanMap.put(1000, "M");
+		romanMap.put(500, "D");
+		romanMap.put(100, "C");
+		romanMap.put(50, "L");
+		romanMap.put(10, "X");
+		romanMap.put(5, "V");
+		romanMap.put(1, "I");
+        
+		StringBuilder sb = new StringBuilder();
+		int n = num;
+		int factor = 1000;
+		
+		while (n > 0) {
+			
+			int left = n / factor;
+			if (left > 0) {
+				
+				sb.append(digitToRoman(left, factor, romanMap));
+			}
+			
+			n = n - left * factor;
+			factor = factor / 10;
+		}
+		
+		return sb.toString();
+    }
+	
+	private String digitToRoman(int digit, int factor, Map<Integer, String> map) {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		if (digit == 9) {
+			
+			sb.append(map.get(factor));
+			sb.append(map.get(factor * 10));
+			return sb.toString();
+		}
+		else if (digit == 5) {
+			
+			return map.get(digit * factor);
+		}
+		else if (digit == 4) {
+			
+			sb.append(map.get(factor));
+			sb.append(map.get(5 * factor));
+			return sb.toString();
+		}
+		else if (digit < 4) {  // 1,2,3
+			
+			String sig = map.get(factor);
+			for (int i = 0; i < digit; ++i) {
+				
+				sb.append(sig);
+			}
+			return sb.toString();
+		}
+		else { // digit 6,7,8
+			
+			sb.append(map.get(5 * factor));
+			for (int i = 5; i < digit; ++i) {
+				
+				sb.append(map.get(factor));
+			}
+			return sb.toString();
+		}
+	}
+	
+	/*
+	 * Roman to Integer
+	 * Given a roman numeral, convert it to an integer.
+	 * Input is guaranteed to be within the range from 1 to 3999.
+	 * 
+	 * ACCEPTED
+	 */
+	public int romanToInt(String s) {
+        
+		if (s == null || s.length() == 0) return 0;
+		
+		Map<Character, Integer> romanMap = new HashMap<Character, Integer>();
+		romanMap.put('M', 1000);
+		romanMap.put('D', 500);
+		romanMap.put('C', 100);
+		romanMap.put('L', 50);
+		romanMap.put('X', 10);
+		romanMap.put('V', 5);
+		romanMap.put('I', 1);
+		
+		int result = 0;
+		int prev = -1;
+		for (int i = s.length() - 1; i >= 0; --i) {
+			
+			int val = romanMap.get(s.charAt(i));
+			
+			if (prev == -1) {
+				
+				prev = val;
+			}
+			else if (val < prev) {
+				
+				val *= -1;
+			}
+			
+			result += val;
+			prev = val;
+		}
+		return result;
+    }
+	
+	
+	
+	/*
+	 * Generate Parentheses
+	 * 
+	 * Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+	 * For example, given n = 3, a solution set is:
+	 * "((()))", "(()())", "(())()", "()(())", "()()()"
+	 * 
+	 */
+	private List<String> list = null;
+	public List<String> generateParenthesis(int n) {
+        
+		list = new ArrayList<String>();
+		
+		
+		
+		return list;
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
 	 * Permutations II
 	 * Given a collection of numbers that might contain duplicates, return all possible unique permutations.
 	 * 
