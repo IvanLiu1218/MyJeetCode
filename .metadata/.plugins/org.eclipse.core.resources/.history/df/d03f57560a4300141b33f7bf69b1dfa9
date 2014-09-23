@@ -453,7 +453,7 @@ public class MyMain {
 		
 		// Reverse Integer
 		System.out.println("Reverse Integer");
-		System.out.println(sol.reverse(-100001));  // 1000000003 溢出
+		System.out.println(sol.reverse(-100001));  // 1000000003 �����
 		
 		// Subsets
 		System.out.println("Subsets");

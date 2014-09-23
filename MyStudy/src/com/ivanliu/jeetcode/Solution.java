@@ -2,6 +2,7 @@ package com.ivanliu.jeetcode;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -3361,7 +3362,7 @@ public class Solution {
 		return n1;
 	}*/
 	
-	// 鍒嗘不娉�
+	// 分治法
 	public ListNode mergeKLists(List<ListNode> lists) {
 		
 		if (lists == null || lists.size() == 0) return null;
@@ -3587,6 +3588,274 @@ public class Solution {
 		}
 		return result;
     }
+	
+	/*
+	 * Subsets 
+	 * 
+	 * Given a set of distinct integers, S, return all possible subsets.
+	 * Note:
+	 * Elements in a subset must be in non-descending order.
+	 * The solution set must not contain duplicate subsets.
+	 * For example,
+	 * If S = [1,2,3], a solution is:
+			[
+			  [3],
+			  [1],
+			  [2],
+			  [1,2,3],
+			  [1,3],
+			  [2,3],
+			  [1,2],
+			  []
+			]
+	 * 
+	 * Wrong Answer
+	 * 
+	 * Input:	[4,1,0]
+	 * Output:	[[4,1,0],[4,1],[4,0],[1,0],[4],[1],[0],[]]
+	 * Expected:[[],[0],[1],[4],[0,1],[0,4],[1,4],[0,1,4]]
+	 * 
+	 * ACCEPTED
+	 */
+	private List<List<Integer>> illist = null;
+	public List<List<Integer>> subsets(int[] S) {
+        
+		illist = new LinkedList<List<Integer>>();
+		
+		for (int i = S.length; i >= 0; --i) {
+			
+			getSubSets(S, i);
+		}
+		
+		for (int i = 0; i < illist.size(); ++i) {
+			
+			Collections.sort(illist.get(i));
+		}
+		Collections.reverse(illist);
+		return illist;
+    }
+	
+	private void getSubSets(int[] S, int num) {
+		
+		List<Integer> list = new ArrayList<Integer>();
+		getSubSets(S, 0, num, list);
+	}
+	
+	private void getSubSets(int[] S, int start, int num, List<Integer> list) {
+		
+		if (num == 0) {
+			
+			illist.add(new LinkedList<Integer>(list));
+			return;
+		}
+		
+		for (int i = start; i < S.length; ++i) {
+			
+			list.add(S[i]);
+			getSubSets(S, i + 1, num - 1, list);
+			list.remove(list.size() - 1);
+		}
+	}
+	
+	/*
+	 * Subsets II
+	 * 
+	 * Given a collection of integers that might contain duplicates, S, return all possible subsets.
+	 * Note:
+	 * Elements in a subset must be in non-descending order.
+	 * The solution set must not contain duplicate subsets.
+	 * For example,
+	 * If S = [1,2,2], a solution is:
+			[
+			  [2],
+			  [1],
+			  [1,2,2],
+			  [2,2],
+			  [1,2],
+			  []
+			]
+	 * 
+	 * ACCEPTED
+	 */
+	public List<List<Integer>> subsetsWithDup(int[] num) {
+        
+		illist = new LinkedList<List<Integer>>();
+		
+		LinkedList<List<Integer>> myllist = new LinkedList<List<Integer>>();
+		
+		for (int i = num.length; i >= 0; --i) {
+			
+			getSubSets(num, i);
+		}
+		
+		for (int i = 0; i < illist.size(); ++i) {
+			
+			List<Integer> list = illist.get(i);
+			Collections.sort(list);
+			if (!myllist.contains(list)) {
+				
+				myllist.add(list);
+			}
+		}
+		Collections.reverse(myllist);
+		return myllist;
+    }
+	
+	/*
+	 * String to Integer (atoi) 
+	 * 
+	 * Implement atoi to convert a string to an integer.
+	 * Hint: Carefully consider all possible input cases. If you want a challenge, 
+	 * please do not see below and ask yourself what are the possible input cases.
+	 * 
+	 * Notes: It is intended for this problem to be specified vaguely (ie, no given input specs). 
+	 * You are responsible to gather all the input requirements up front.
+	 * 
+	 * spoilers alert... click to show requirements for atoi.
+	 * 
+	 * Requirements for atoi:
+	 * The function first discards as many whitespace characters as necessary until the first non-whitespace character is found. 
+	 * Then, starting from this character, takes an optional initial plus or minus sign followed by as many numerical digits as possible, 
+	 * and interprets them as a numerical value.
+	 * The string can contain additional characters after those that form the integral number, 
+	 * which are ignored and have no effect on the behavior of this function.
+	 * If the first sequence of non-whitespace characters in str is not a valid integral number, 
+	 * or if no such sequence exists because either str is empty or it contains only whitespace characters, 
+	 * no conversion is performed.
+	 * If no valid conversion could be performed, a zero value is returned. 
+	 * If the correct value is out of the range of representable values, INT_MAX (2147483647) or INT_MIN (-2147483648) is returned.
+	 * 
+	 * ACCEPTED
+	 */
+	public int atoi(String str) {
+		
+		if (str == null) return 0;
+		str = str.trim();
+		if (str.length() == 0) return 0;
+		
+		long result = 0;
+		boolean isNegative = false;
+		
+		int i = 0;
+		char c = str.charAt(i);
+		
+		if (c == '-' || c == '+') {
+			
+			isNegative = (c == '-');
+			i++;
+		}
+		while (i < str.length()) {
+			
+			c = str.charAt(i++);
+			if (c < '0' || c > '9') break;
+			
+			result = result * 10 + (c - '0');
+			
+			if (!isNegative && result >= Integer.MAX_VALUE) return Integer.MAX_VALUE;
+	        if (isNegative && (-1) * result <= Integer.MIN_VALUE) return Integer.MIN_VALUE;
+		}
+		
+		if (isNegative) {
+			
+			result *= -1;
+		}
+		
+        return (int)result;
+    }
+	
+	/*
+	 * Palindrome Number
+	 * 
+	 * Determine whether an integer is a palindrome. Do this without extra space.
+	 * 
+	 * click to show spoilers.
+	 * 
+	 * Some hints:
+	 * Could negative integers be palindromes? (ie, -1)
+	 * If you are thinking of converting the integer to string, note the restriction of using extra space.
+	 * You could also try reversing an integer. However, if you have solved the problem "Reverse Integer", 
+	 * you know that the reversed integer might overflow. How would you handle such case?
+	 * There is a more generic way of solving this problem.
+	 * 
+	 * Wrong Answer
+	 * Input:	1000021
+	 * Output:	true
+	 * Expected:false
+	 * 
+	 * Input:	0
+	 * Output:	false
+	 * Expected:true
+	 * 
+	 * Input:	1001
+	 * Output:	false
+	 * Expected:true
+	 * 
+	 * ACCEPTED
+	 */
+	public boolean isPalindrome(int x) {
+        
+		if (x < 0) return false;
+		if (x == 0) return true;  // 0
+		
+		int length = getLengthOfInt(x);
+		int factor = getFactor(length);
+		
+		while (x > 9) {  // 12321 -> 232 -> 3
+			             // 1221 -> 22 -> 0
+			
+			int a = x / factor;
+			int b = x % 10;
+			if (a != b) return false;
+			
+			x = (x - a * factor - b) / 10;
+			factor = factor / 100;
+		}
+		if (x == 0) return true;  // 1001 -> 00
+		if (factor != 1 && factor != 0) return false;  // 1000021 -> 00002
+		
+		return true;
+    }
+	
+	private int getLengthOfInt(int x) {
+		
+		if (x == 0) return 1;
+		
+		int length = 0;
+		int num = x;
+		
+		while (num > 0) {
+			
+			length++;
+			num = num / 10;
+		}
+		
+		return length;
+	}
+	
+	private int getFactor(int length) {
+		
+		int factor = 1;
+		
+		for (int i = 0; i < length - 1; ++i) {
+			
+			factor *= 10;
+		}
+		
+		return factor;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
