@@ -477,6 +477,14 @@ public class MyMain {
 		System.out.println("Palindrome Number");
 		System.out.println(sol.isPalindrome(1001));
 		
+		// Distinct Subsequences 
+		System.out.println("Distinct Subsequences");
+		String S = "rabbbit";
+		String T = "rabbit";
+		System.out.println(sol.numDistinct(S, T));
+		
+		
+		
 		
 		// Generate Parentheses
 		//System.out.println("Generate Parentheses");
